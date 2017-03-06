@@ -24,12 +24,13 @@ fun main(args : Array<String>) {
   println("##############\n")
 
   val baseNoodles : Noodles = getBaseNoodles(chooseNoodles())
-  val noodlesWithIngredient : Noodles = getIngredient(baseNoodles, chooseIngredient())
+  val noodlesWithIngredient : Noodles = getIngredient(baseNoodles, ::chooseIngredient)
   val noodlesWithIngredientAndSouce : Noodles = getSauce(noodlesWithIngredient, chooseSauce())
 
   println("> Your order is: ${noodlesWithIngredientAndSouce.calculateCost()} $")
   if (noodlesWithIngredientAndSouce is SauceDecorator) {
-    println("> Spiciness is: ${noodlesWithIngredientAndSouce.SPICINESS} out of 4")
+    val outOfControl = if (noodlesWithIngredientAndSouce.SPICINESS == 4) "OUT OF CONTROOOL !_!" else ""
+    println("> Spiciness is: ${noodlesWithIngredientAndSouce.SPICINESS} out of 4 $outOfControl")
   } else {
     println("> Without sauce")
   }
@@ -59,7 +60,8 @@ fun getBaseNoodles(choice: Int) : Noodles {
   }
 }
 
-fun chooseIngredient() : Int {
+fun chooseIngredient(noodles: Noodles) : Int {
+  showCart(noodles)
   var ingredientChoice : Int = -1
   while (ingredientChoice != 0 && !(1..4).contains(ingredientChoice)) {
     println("> Choose your ingredient!\n")
@@ -75,16 +77,19 @@ fun chooseIngredient() : Int {
   return ingredientChoice
 }
 
-fun getIngredient(noodles: Noodles, choice: Int) : Noodles {
-  println("> Your cart is: ${noodles.calculateCost()} $")
-  when (choice) {
-    1 -> return getIngredient(Chicken(noodles), chooseIngredient())
-    2 -> return getIngredient(Peanuts(noodles), chooseIngredient())
-    3 -> return getIngredient(Pork(noodles), chooseIngredient())
-    4 -> return getIngredient(Tuna(noodles), chooseIngredient())
+fun getIngredient(noodles: Noodles, chooseIngredient: (Noodles) -> Int) : Noodles {
+  when (chooseIngredient(noodles)) {
+    1 -> return getIngredient(Chicken(noodles), chooseIngredient)
+    2 -> return getIngredient(Peanuts(noodles), chooseIngredient)
+    3 -> return getIngredient(Pork(noodles), chooseIngredient)
+    4 -> return getIngredient(Tuna(noodles), chooseIngredient)
     else -> return noodles
   }
 }
+
+private fun showCart(noodles: Noodles) =
+  println("> Your cart is: ${noodles.calculateCost()} $")
+
 fun chooseSauce() : Int {
   var sauceChoice : Int = -1
   while (sauceChoice != 0 && !(1..4).contains(sauceChoice)) {
