@@ -8,7 +8,7 @@ class ChooseNoodlesCommand(val cart : Cart) : Command {
     val CHOOSE_NOODLES : String = "1"
   }
 
-  override fun matches(command: String): Boolean = command.equals(CHOOSE_NOODLES)
+  override fun matches(command: String): Boolean = command == CHOOSE_NOODLES
 
   override fun execute() {
     cart.chooseNoodles()

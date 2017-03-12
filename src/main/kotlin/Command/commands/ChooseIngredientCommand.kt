@@ -9,7 +9,7 @@ class ChooseIngredientCommand(val cart : Cart) : Command {
     val CHOOSE_INGREDIENT : String = "2"
   }
 
-  override fun matches(command: String) = command.equals(CHOOSE_INGREDIENT)
+  override fun matches(command: String) = command == CHOOSE_INGREDIENT
 
   override fun execute() {
     cart.chooseIngredient()

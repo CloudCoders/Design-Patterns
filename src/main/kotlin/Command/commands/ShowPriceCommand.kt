@@ -9,7 +9,7 @@ class ShowPriceCommand(val cart : Cart) : Command {
     val SHOW_PRICE : String = "4"
   }
 
-  override fun matches(command: String): Boolean = command.equals(SHOW_PRICE)
+  override fun matches(command: String): Boolean = command == SHOW_PRICE
 
   override fun execute() {
     cart.showPrice()
