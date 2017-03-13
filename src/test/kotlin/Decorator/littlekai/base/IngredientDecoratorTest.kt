@@ -5,6 +5,7 @@ import Decorator.littlekai.ingredients.Tuna
 import Decorator.littlekai.noodles.UdonNoodles
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.assertThat
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class IngredientDecoratorTest {
@@ -15,15 +16,16 @@ class IngredientDecoratorTest {
 
   @Test
   fun `check if decorated element is still Noodles`() =
-    assertThat(ingredient is Noodles, `is`(true))
+    assertTrue(ingredient is Noodles)
+
 
   @Test
   fun `check type of stacked decorators should be equal to last`() =
-    assertThat(doubleIngredient is Tuna, `is`(true))
+    assertTrue(doubleIngredient is Tuna)
 
   @Test
   fun `check decorated Noodles is of type IngredientDecorator`() =
-    assertThat(doubleIngredient is IngredientDecorator, `is`(true))
+    assertTrue(doubleIngredient is IngredientDecorator)
 
   @Test
   fun `check price of Ingredient is calculated correctly`() =
