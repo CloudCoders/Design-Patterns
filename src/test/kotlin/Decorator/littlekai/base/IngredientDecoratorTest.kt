@@ -2,7 +2,9 @@ package Decorator.littlekai.base
 
 import Decorator.littlekai.ingredients.Pork
 import Decorator.littlekai.ingredients.Tuna
+import Decorator.littlekai.noodles.EggNoodles
 import Decorator.littlekai.noodles.UdonNoodles
+import Decorator.littlekai.noodles.WheatNoodles
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test
@@ -28,5 +30,23 @@ class IngredientDecoratorTest {
   @Test
   fun `check price of Ingredient is calculated correctly`() =
     assertThat(doubleIngredient.calculateCost(), `is`(baseNoodles.COST + ingredient.COST + doubleIngredient.COST))
+
+  @Test
+  fun `check correctness of wheat noodles's cost`(){
+    val wheatNoodles = WheatNoodles()
+    assertThat(wheatNoodles.calculateCost(), `is`(3.50))
+  }
+
+  @Test
+  fun `check correctness of egg noodles's cost`(){
+    val eggNoodles = EggNoodles()
+    assertThat(eggNoodles.calculateCost(), `is`(3.75))
+  }
+
+  @Test
+  fun `check correctness of udon noodles's cost`(){
+    val udonNoodles = UdonNoodles()
+    assertThat(udonNoodles.calculateCost(), `is`(4.00))
+  }
 
 }
