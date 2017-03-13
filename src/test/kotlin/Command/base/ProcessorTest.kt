@@ -1,6 +1,7 @@
 package Command.base
 
 import Command.commands.*
+import junit.framework.Assert.assertTrue
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test
@@ -20,12 +21,12 @@ class ProcessorTest {
 
   @Test
   fun `check if command matcher matches correctly`() {
-    assertThat(processor.process("2") is ChooseIngredientCommand, `is`(true))
+    assertTrue(processor.process("2") is ChooseIngredientCommand)
   }
 
   @Test
   fun `check if command does not match it returns CommandNotFound`() {
-    assertThat(processor.process("Bad matching") is CommandNotFound, `is`(true))
+    assertTrue(processor.process("Bad matching") is CommandNotFound)
   }
 
 }
