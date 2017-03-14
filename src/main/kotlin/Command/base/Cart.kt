@@ -16,7 +16,7 @@ import Decorator.littlekai.sauces.TeriyakiSauce
 import Factory.base.NoodlesFactory
 import java.util.*
 
-class Cart(private val scanner: Scanner) {
+open class Cart(private val scanner: Scanner) {
 
   private lateinit var noodles: Noodles
 
@@ -36,7 +36,7 @@ class Cart(private val scanner: Scanner) {
     noodles = noodlesFactory.getNoodles(noodlesChoice)
   }
 
-  fun chooseIngredient() {
+  open fun chooseIngredient() {
     var ingredientChoice: Int = -1
     while (!(1..4).contains(ingredientChoice)) {
       println("> Choose your ingredient!\n")
