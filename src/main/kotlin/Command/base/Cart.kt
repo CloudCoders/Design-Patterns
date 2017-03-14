@@ -13,6 +13,7 @@ import Decorator.littlekai.sauces.BittersweetSauce
 import Decorator.littlekai.sauces.RedPepperSauce
 import Decorator.littlekai.sauces.SateSauce
 import Decorator.littlekai.sauces.TeriyakiSauce
+import Factory.base.NoodlesFactory
 import java.util.*
 
 class Cart(private val scanner: Scanner) {
@@ -31,11 +32,8 @@ class Cart(private val scanner: Scanner) {
     }
     println()
 
-    when (noodlesChoice) {
-      1 -> noodles = EggNoodles()
-      2 -> noodles = UdonNoodles()
-      else -> noodles = WheatNoodles()
-    }
+    val noodlesFactory = NoodlesFactory()
+    noodles = noodlesFactory.getNoodles(noodlesChoice)
   }
 
   fun chooseIngredient() {
