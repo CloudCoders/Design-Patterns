@@ -20,13 +20,12 @@ class ProcessorTest {
   val processor = Processor(commands, CommandNotFound())
 
   @Test
-  fun `check if command matcher matches correctly`() {
+  fun `when process 2 should return a ChooseIngredientCommand`() =
     assertTrue(processor.process("2") is ChooseIngredientCommand)
-  }
 
   @Test
-  fun `check if command does not match it returns CommandNotFound`() {
+  fun `when any command does not match it returns CommandNotFound`() =
     assertTrue(processor.process("Bad matching") is CommandNotFound)
-  }
+
 
 }

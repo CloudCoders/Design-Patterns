@@ -10,25 +10,21 @@ import org.junit.Test
 
 class IngredientDecoratorTest {
 
-  val baseNoodles = UdonNoodles()
-  val ingredient = Pork(baseNoodles)
-  val doubleIngredient = Tuna(ingredient)
-
   @Test
   fun `check if decorated element is still Noodles`() =
-    assertTrue(ingredient is Noodles)
+    assertTrue(Pork(UdonNoodles()) is Noodles) //:+1:
 
 
   @Test
-  fun `check type of stacked decorators should be equal to last`() =
-    assertTrue(doubleIngredient is Tuna)
+  fun `Ingredient Decorator should return ingredient cost plus base noodle cost`() =
+    assertThat(Pork(UdonNoodles()).calculateCost(), `is`(8.00))
 
   @Test
   fun `check decorated Noodles is of type IngredientDecorator`() =
-    assertTrue(doubleIngredient is IngredientDecorator)
+    assertTrue(Tuna(UdonNoodles()) is IngredientDecorator)
 
   @Test
-  fun `check price of Ingredient is calculated correctly`() =
-    assertThat(doubleIngredient.calculateCost(), `is`(baseNoodles.COST + ingredient.COST + doubleIngredient.COST))
+  fun `price of ingredient is calculated correctly`() =
+    assertThat(Tuna(Pork(UdonNoodles())).calculateCost(), `is`(10.75))
 
 }
