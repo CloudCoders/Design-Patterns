@@ -1,11 +1,3 @@
 package Strategy.strategies
 
-import Strategy.base.IvaStrategy
-
-class ReducedStrategy : IvaStrategy {
-
-  override fun applyIva(cost: Double): Double {
-    return cost + cost * 0.10
-  }
-
-}
+val ReducedStrategy : (Double) -> Double = { it + it * 0.10 }
