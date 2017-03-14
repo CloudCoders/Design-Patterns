@@ -1,4 +1,6 @@
-package strategy
+package Strategy.strategies
+
+import Strategy.base.IvaStrategy
 
 class SuperReducedStrategy : IvaStrategy {
 
