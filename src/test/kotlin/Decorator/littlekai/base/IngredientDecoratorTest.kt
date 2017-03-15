@@ -35,65 +35,12 @@ class IngredientDecoratorTest {
     assertThat(Tuna(Pork(UdonNoodles())).calculateCost(), `is`(10.75))
 
   @Test
-  fun `has the same interface`() {
+  fun `has the same interface`() =
     assertTrue(BittersweetSauce(Chicken(EggNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Chicken(UdonNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Chicken(WheatNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Peanuts(EggNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Peanuts(UdonNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Peanuts(WheatNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Pork(EggNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Pork(UdonNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Pork(WheatNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Tuna(EggNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Tuna(UdonNoodles())) is Noodles)
-    assertTrue(BittersweetSauce(Tuna(WheatNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Chicken(EggNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Chicken(UdonNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Chicken(WheatNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Peanuts(EggNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Peanuts(UdonNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Peanuts(WheatNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Pork(EggNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Pork(UdonNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Pork(WheatNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Tuna(EggNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Tuna(UdonNoodles())) is Noodles)
-    assertTrue(RedPepperSauce(Tuna(WheatNoodles())) is Noodles)
-    assertTrue(SateSauce(Chicken(EggNoodles())) is Noodles)
-    assertTrue(SateSauce(Chicken(UdonNoodles())) is Noodles)
-    assertTrue(SateSauce(Chicken(WheatNoodles())) is Noodles)
-    assertTrue(SateSauce(Peanuts(EggNoodles())) is Noodles)
-    assertTrue(SateSauce(Peanuts(UdonNoodles())) is Noodles)
-    assertTrue(SateSauce(Peanuts(WheatNoodles())) is Noodles)
-    assertTrue(SateSauce(Pork(EggNoodles())) is Noodles)
-    assertTrue(SateSauce(Pork(UdonNoodles())) is Noodles)
-    assertTrue(SateSauce(Pork(WheatNoodles())) is Noodles)
-    assertTrue(SateSauce(Tuna(EggNoodles())) is Noodles)
-    assertTrue(SateSauce(Tuna(UdonNoodles())) is Noodles)
-    assertTrue(SateSauce(Tuna(WheatNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Chicken(EggNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Chicken(UdonNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Chicken(WheatNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Peanuts(EggNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Peanuts(UdonNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Peanuts(WheatNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Pork(EggNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Pork(UdonNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Pork(WheatNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Tuna(EggNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Tuna(UdonNoodles())) is Noodles)
-    assertTrue(TeriyakiSauce(Tuna(WheatNoodles())) is Noodles)
-  }
 
   @Test
-  fun `does not modify behavior`() {
-    val eggNoodles = EggNoodles()
-    val chickenEggNoodles = Chicken(eggNoodles)
-    val bittersweetEggNoodles = BittersweetSauce(eggNoodles)
-    assertTrue(eggNoodles.calculateCost() == chickenEggNoodles.calculateCost())
-    assertTrue(eggNoodles.calculateCost() == bittersweetEggNoodles.calculateCost())
-  }
+  fun `does not modify behavior`() =
+    assertTrue(EggNoodles().calculateCost() == BittersweetSauce(Chicken(EggNoodles())).calculateCost())
 
   @Test
   fun `adds behavior`() {
