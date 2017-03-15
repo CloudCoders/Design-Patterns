@@ -104,7 +104,7 @@ open class Cart(private val scanner: Scanner,
   fun showPrice() {
     chooseStrategy()
 
-    println("> Your order is: ${ivaStrategy.invoke(noodles.calculateCost())} $")
+    println("> Your order is: ${ivaStrategy(noodles.calculateCost())} $")
     if (noodles is SauceDecorator) {
       println("> Spiciness is: ${(noodles as SauceDecorator).SPICINESS} out of 4")
     } else {
