@@ -1,5 +1,5 @@
 package Decorator.littlekai.base
 
-interface Noodles {
+interface  Noodles {
   fun calculateCost() : Double
 }
