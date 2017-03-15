@@ -2,8 +2,7 @@ package Decorator.littlekai.noodles
 
 import Decorator.littlekai.base.Noodles
 
-class EggNoodles : Noodles {
-  private val COST : Double = 3.75
-
-  override fun calculateCost(): Double = this.COST
+class EggNoodles(val COST: Double = 3.75): Noodles {
+  override fun calculateCost(): Double = COST
+  override fun calculateTotalCost(): Double = COST
 }
