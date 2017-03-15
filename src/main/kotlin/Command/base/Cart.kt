@@ -1,14 +1,12 @@
 package Command.base
 
+import Decorator.littlekai.base.IngredientDecorator
 import Decorator.littlekai.base.Noodles
 import Decorator.littlekai.base.SauceDecorator
 import Decorator.littlekai.ingredients.Chicken
 import Decorator.littlekai.ingredients.Peanuts
 import Decorator.littlekai.ingredients.Pork
 import Decorator.littlekai.ingredients.Tuna
-import Decorator.littlekai.noodles.EggNoodles
-import Decorator.littlekai.noodles.UdonNoodles
-import Decorator.littlekai.noodles.WheatNoodles
 import Decorator.littlekai.sauces.BittersweetSauce
 import Decorator.littlekai.sauces.RedPepperSauce
 import Decorator.littlekai.sauces.SateSauce
@@ -79,7 +77,11 @@ open class Cart(private val scanner: Scanner) {
   }
 
   fun showPrice() {
-    println("> Your order is: ${noodles.calculateCost()} $")
+    var totalCost = noodles.calculateCost()
+    if (noodles is IngredientDecorator) {
+      totalCost = (noodles as IngredientDecorator).calculateTotalCost()
+    }
+    println("> Your order is: $totalCost $")
     if (noodles is SauceDecorator) {
       println("> Spiciness is: ${(noodles as SauceDecorator).SPICINESS} out of 4")
     } else {
