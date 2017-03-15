@@ -5,5 +5,9 @@ import Decorator.littlekai.base.Noodles
 
 
 class Tuna(noodles: Noodles) : IngredientDecorator(noodles) {
-  override val COST: Double = 2.75
+  private val COST: Double = 2.75
+
+  override fun calculateTotalCost(): Double {
+    return calculateCost() + COST
+  }
 }
