@@ -6,17 +6,19 @@ import Decorator.littlekai.ingredients.Chicken
 import Decorator.littlekai.ingredients.Peanuts
 import Decorator.littlekai.ingredients.Pork
 import Decorator.littlekai.ingredients.Tuna
-import Decorator.littlekai.noodles.EggNoodles
-import Decorator.littlekai.noodles.UdonNoodles
-import Decorator.littlekai.noodles.WheatNoodles
 import Decorator.littlekai.sauces.BittersweetSauce
 import Decorator.littlekai.sauces.RedPepperSauce
 import Decorator.littlekai.sauces.SateSauce
 import Decorator.littlekai.sauces.TeriyakiSauce
 import Factory.base.NoodlesFactory
+import Strategy.strategies.GeneralStrategy
+import Strategy.strategies.ReducedStrategy
+import Strategy.strategies.SuperReducedStrategy
 import java.util.*
 
-open class Cart(private val scanner: Scanner) {
+open class Cart(private val scanner: Scanner,
+  private var ivaStrategy: (Double) -> Double = GeneralStrategy) {
+
 
   private lateinit var noodles: Noodles
 
@@ -78,8 +80,31 @@ open class Cart(private val scanner: Scanner) {
     }
   }
 
+  fun chooseStrategy(){
+    var sauceChoice: Int = -1
+    while (!(1..3).contains(sauceChoice)) {
+      println("> Choose your IVA !\n")
+      println("1> General IVA 21%")
+      println("2> Reduced IVA 10%")
+      println("3> Super Reduced IVA 4%")
+      print("> ")
+      sauceChoice = scanner.nextInt()
+    }
+    println()
+    println()
+
+    when (sauceChoice) {
+      1 -> ivaStrategy = GeneralStrategy
+      2 -> ivaStrategy = ReducedStrategy
+      3 -> ivaStrategy = SuperReducedStrategy
+      else -> ivaStrategy = GeneralStrategy
+    }
+  }
+
   fun showPrice() {
-    println("> Your order is: ${noodles.calculateCost()} $")
+    chooseStrategy()
+
+    println("> Your order is: ${ivaStrategy(noodles.calculateCost())} $")
     if (noodles is SauceDecorator) {
       println("> Spiciness is: ${(noodles as SauceDecorator).SPICINESS} out of 4")
     } else {
