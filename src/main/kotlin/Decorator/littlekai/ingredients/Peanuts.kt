@@ -4,6 +4,8 @@ import Decorator.littlekai.base.IngredientDecorator
 import Decorator.littlekai.base.Noodles
 
 
-class Peanuts(noodles: Noodles, val COST: Double = 2.50): IngredientDecorator(noodles) {
+class Peanuts(noodles: Noodles): IngredientDecorator(noodles) {
+  val COST: Double = 2.50
+
   override fun calculateTotalCost(): Double = super.calculateTotalCost() + COST
 }
