@@ -1,8 +1,27 @@
 # Design Patterns
 
+##DONE 
+
 ### Creational patterns:
 
-- [ ] Abstract factory: Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+- [x] Abstract factory: Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+
+### Structural patterns:
+
+- [x] Decorator:	Attach additional responsibilities to an object dynamically keeping the same interface. Decorators provide a flexible alternative to subclassing for extending functionality.
+
+### Behavioral patterns:
+
+- [x] Command: 	Encapsulate a request as an object, thereby allowing for the parameterization of clients with different requests, and the queuing or logging of requests. It also allows for the support of undoable operations.
+
+- [x] Strategy: Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+
+
+##TODO
+
+### Creational patterns:
+
+
 	
 - [ ] Builder:	Separate the construction of a complex object from its representation, allowing the same construction process to create various representations.
 	
@@ -28,7 +47,7 @@
 
 - [ ] Composite:	Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
 
-- [ ] Decorator:	Attach additional responsibilities to an object dynamically keeping the same interface. Decorators provide a flexible alternative to subclassing for extending functionality.
+
 
 - [ ] Extension object:	Adding functionality to a hierarchy without changing the hierarchy.	No	No	Agile Software Development, Principles, Patterns, and Practices[21]
 
