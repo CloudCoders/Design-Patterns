@@ -1,11 +1,13 @@
 package oop.Facade
 
-class InvoiceFacade(val iva: IVAOperation,
-                    val irpf: IRPFOperation) {
+class NetInvoiceSalaryFacade(val iva: IVAOperation,
+                             val irpf: IRPFOperation) {
 
-  fun calculate(salary: Double) : Double {
-    return salary + iva.apply(salary) - irpf.apply(salary)
-  }
+  fun calculate(salary: Double) : Double =
+    salary + iva.apply(salary) - irpf.apply(salary)
+
+  fun calculateAnnual(monthlySalary: Double) : Double =
+    calculate(monthlySalary * 12)
 
 }
 
