@@ -1,6 +1,6 @@
-# Design Patterns
+# OOP Design Patterns and FP paradigm
 
-##DONE 
+## DONE 
 
 ### Creational patterns:
 
@@ -10,6 +10,8 @@
 
 - [x] Decorator:	Attach additional responsibilities to an object dynamically keeping the same interface. Decorators provide a flexible alternative to subclassing for extending functionality.
 
+- [x] Composite:	Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
+
 - [x] Facade:	Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.
 
 ### Behavioral patterns:
@@ -18,8 +20,7 @@
 
 - [x] Strategy: Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
 
-
-##TODO
+## TODO
 
 ### Creational patterns:
 
@@ -46,8 +47,6 @@
 - [ ] Adapter or Wrapper or Translator:	Convert the interface of a class into another interface clients expect. An adapter lets classes work together that could not otherwise because of incompatible interfaces. The enterprise integration pattern equivalent is the translator.
 
 - [ ] Bridge:	Decouple an abstraction from its implementation allowing the two to vary independently.
-
-- [ ] Composite:	Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
 
 - [ ] Extension object:	Adding functionality to a hierarchy without changing the hierarchy.	No	No	Agile Software Development, Principles, Patterns, and Practices[21]
 
