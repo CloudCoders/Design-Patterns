@@ -5,7 +5,7 @@ interface State {
   fun next(): State
 }
 
-sealed class SemaphoreStates() : State {
+sealed class SemaphoreStates : State {
 
   object Red : SemaphoreStates() {
     override fun next(): State {
