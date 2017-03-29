@@ -7,29 +7,29 @@ interface State {
 
 sealed class SemaphoreStates() : State {
 
-  class Red : SemaphoreStates() {
+  object Red : SemaphoreStates() {
     override fun next(): State {
       println("Red")
-      return Green()
+      return Green
     }
   }
 
-  class Green : SemaphoreStates() {
+  object Green : SemaphoreStates() {
     override fun next(): State {
       println("Green")
-      return Ambar()
+      return Ambar
     }
   }
 
-  class Ambar : SemaphoreStates() {
+  object Ambar : SemaphoreStates() {
     override fun next(): State {
       println("Ambar")
-      return Red()
+      return Red
     }
   }
 }
 
-class Semaphore(var state: State = SemaphoreStates.Red()) {
+class Semaphore(var state: State = SemaphoreStates.Red) {
 
   fun changeState() {
     state = state.next()
