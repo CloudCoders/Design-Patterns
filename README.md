@@ -1,4 +1,4 @@
-# Design Patterns
+# OOP Design Patterns and FP paradigm
 
 ##DONE 
 
