@@ -1,8 +1,8 @@
-package Composite
+package oop.Composite
 
-import Composite.base.ChineseCooker
-import Composite.base.Cooker
-import Composite.base.ItalianCooker
+import oop.Composite.base.ChineseCooker
+import oop.Composite.base.Cooker
+import oop.Composite.base.ItalianCooker
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test

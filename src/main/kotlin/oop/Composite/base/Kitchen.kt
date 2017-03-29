@@ -1,4 +1,4 @@
-package Composite.base
+package oop.Composite.base
 
 class Kitchen(private var cookers: MutableList<Cooker> = mutableListOf()) : Cooker {
   override fun cook() {

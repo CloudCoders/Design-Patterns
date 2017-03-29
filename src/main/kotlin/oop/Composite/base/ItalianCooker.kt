@@ -1,4 +1,4 @@
-package Composite.base
+package oop.Composite.base
 
 class ItalianCooker : Cooker {
   override fun cook() {

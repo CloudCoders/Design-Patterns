@@ -1,8 +1,8 @@
-package Composite
+package oop.Composite
 
-import Composite.base.ChineseCooker
-import Composite.base.ItalianCooker
-import Composite.base.Kitchen
+import oop.Composite.base.ChineseCooker
+import oop.Composite.base.ItalianCooker
+import oop.Composite.base.Kitchen
 
 fun main(args : Array<String>) {
 
