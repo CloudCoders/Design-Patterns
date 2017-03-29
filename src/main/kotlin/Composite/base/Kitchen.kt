@@ -8,6 +8,6 @@ class Kitchen(private var cookers: MutableList<Cooker> = mutableListOf()) : Cook
   fun add(cooker: Cooker) = cookers.add(cooker)
 
   fun remove(cooker: Cooker) {
-    cookers = cookers.filterNot { it == cooker } as MutableList<Cooker>
+    cookers.remove(cooker)
   }
 }
