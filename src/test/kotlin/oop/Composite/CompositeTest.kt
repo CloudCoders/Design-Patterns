@@ -43,12 +43,14 @@ class CompositeTest {
     val cookers = mutableListOf<Cooker>()
     val kitchen = Kitchen(cookers)
     val italian = MockCooker()
+    val another = MockCooker()
     val chinese = MockCooker()
     kitchen.add(italian)
+    kitchen.add(another)
     kitchen.add(chinese)
 
     kitchen.cook()
-    assertThat(italian.times + italian.times, `is`(cookers.size))
+    assertThat(italian.times + chinese.times, `is`(cookers.size))
   }
 
 }
