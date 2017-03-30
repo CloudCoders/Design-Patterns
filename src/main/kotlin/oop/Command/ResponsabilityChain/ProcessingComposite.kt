@@ -2,7 +2,9 @@ package oop.Command.ResponsabilityChain
 
 object ProcessingComposite : MessageProcessor {
 
-  val usernameProcessor = UsernameProcessor()
+  val bottom = PlainTextProcessor()
+  val next = PasswordProcessor(bottom)
+  val usernameProcessor = UsernameProcessor(next)
 
   override fun process(message: Message): String = usernameProcessor.process(message)
 }
