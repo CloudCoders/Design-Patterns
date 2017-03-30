@@ -50,7 +50,7 @@ class CompositeTest {
     kitchen.add(chinese)
 
     kitchen.cook()
-    assertThat(italian.times + chinese.times, `is`(cookers.size))
+    assertThat(italian.times + chinese.times + another.times, `is`(cookers.size))
   }
 
 }
