@@ -7,7 +7,7 @@ class Captain : Soldier {
     val TYPE = 2
   }
   init {
-      Flyweitght.objectInstances++
+      Flyweight.objectInstances++
   }
 
   val attack = 10

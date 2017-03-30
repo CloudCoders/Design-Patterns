@@ -1,5 +1,7 @@
 package oop.Flyweight
 
+import org.jetbrains.annotations.TestOnly
+
 class SoldierFactory {
   companion object {
     var admiral: Admiral? = null
@@ -21,6 +23,12 @@ class SoldierFactory {
         }
       }
       throw IllegalArgumentException()
+    }
+
+    @TestOnly
+    fun clearInstances(){
+      admiral = null
+      captain = null
     }
   }
 

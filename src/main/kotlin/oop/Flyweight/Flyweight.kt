@@ -1,7 +1,7 @@
 package oop.Flyweight
 
 import java.awt.Point
-class Flyweitght{
+class Flyweight{
   companion object{
     var objectInstances = 0
   }
@@ -21,6 +21,6 @@ fun main(args: Array<String>) {
   soldiers[3].attack(Point(11,7))
   soldiers[4].attack(Point(21,3))
 
-  System.out.println(Flyweitght.objectInstances)
+  System.out.println(Flyweight.objectInstances)
 
 }

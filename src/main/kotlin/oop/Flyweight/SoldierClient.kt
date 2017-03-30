@@ -1,5 +1,6 @@
 package oop.Flyweight
 
+import org.jetbrains.annotations.TestOnly
 import java.awt.Point
 
 class SoldierClient(private val type: Int) {
@@ -9,5 +10,8 @@ class SoldierClient(private val type: Int) {
   fun attack(attackPoint: Point){
     soldier.attack(currentPosition,attackPoint)
   }
+
+  @TestOnly
+  fun getSoldier() = soldier
 
 }
