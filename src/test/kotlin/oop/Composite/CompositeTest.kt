@@ -1,17 +1,11 @@
 package oop.Composite
 
-import oop.Composite.base.Cooker
-import oop.Composite.base.ItalianCooker
-import oop.Composite.base.Kitchen
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
 class CompositeTest {
 
-  /**
-   * Example of "spies" without using your MockKitchen because don't need that
-   */
   @Test
   fun `composite should allow to add more childrens`() {
     val cookers = mutableListOf<Cooker>()
@@ -35,9 +29,6 @@ class CompositeTest {
     assertThat(cookers.size, `is`(0))
   }
 
-  /**
-   * HERE YOU WANT TO KNOW IF ALL COOKERS ARE CALLED :+1:
-   */
   @Test
   fun `times cooked should be equal to cookers length after cooking with all childrens of composite`() {
     val cookers = mutableListOf<Cooker>()
@@ -51,6 +42,20 @@ class CompositeTest {
 
     kitchen.cook()
     assertThat(italian.times + chinese.times + another.times, `is`(cookers.size))
+  }
+
+  @Test
+  fun `times cooked should be equals to cookers length * 2`(){
+    val cookers = mutableListOf<Cooker>()
+    val kitchen = Kitchen(cookers)
+    val supportCooker = MockCooker()
+    val chinese = ChineseCooker(mutableListOf(supportCooker, supportCooker))
+    val italian = ItalianCooker(mutableListOf(supportCooker))
+    kitchen.add(italian)
+    kitchen.add(chinese)
+
+    kitchen.cook()
+    assertThat(supportCooker.times, `is`(3))
   }
 
 }
