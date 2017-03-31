@@ -2,16 +2,17 @@ package fp.Maybe
 
 // I'm using a Main because I think it is more illustrative in this case
 
-fun main(args : Array<String>) {
+fun main(args: Array<String>) {
 
   // Silly example
 
-  val maybe3 = Maybe.of(3)
-  val maybe33 = Maybe.of(33)
-  val nullIfLowerThan10 : (Int) -> Int? = { if (it < 10) null else it }
+  val maybe3 = Maybe(3)
+  val maybe33 = Maybe(33)
+  val nullIfLowerThan10: (Int) -> Maybe<Int> = { if (it < 10) Maybe.None else Maybe.Just(it) }
+  val returnExplanatoryString: () -> String = { "Result is null" }
 
-  val result3 = maybe3.map(nullIfLowerThan10).getOrElse("Result is null")
-  val result33 = maybe33.map(nullIfLowerThan10).getOrElse("Result is null")
+  val result3 = maybe3.flatMap(nullIfLowerThan10).getOrElse(returnExplanatoryString)
+  val result33 = maybe33.flatMap(nullIfLowerThan10).getOrElse(returnExplanatoryString)
 
   println(result3)
   println(result33)
@@ -19,14 +20,22 @@ fun main(args : Array<String>) {
   // Better example
 
   val listOfCountries = listOf("Spain", "France", "England", "Italy")
-  val maybeCountry = Maybe.of(listOfCountries)
 
-  val country = maybeCountry
-    .apply { it.find { it == "Tanzania" } }
-    .map { (it as String).toUpperCase() }
-    .getOrElse("That country is not in List")                                     // Totally safe thanks to Maybe monad
+  val getValueInList: (String) -> (List<String>) -> String? = { item ->
+    {
+      list -> list.find { it == item }
+    }
 
-  val countryClassic = listOfCountries.find { it == "Tanzania" }?.toUpperCase()   // Safer thanks to Kotlin nullables
+  }
+  val getTanzaniaInList = getValueInList("Tanzania")
+
+  val maybeTanzania = Maybe.fromNullable(getTanzaniaInList(listOfCountries))
+
+  val country = maybeTanzania
+    .map(String::toUpperCase)
+    .getOrElse(returnExplanatoryString)                                          // Totally safe thanks to Maybe monad
+
+  val countryClassic = listOfCountries.find { it == "Tanzania" }?.toUpperCase()  // Safer thanks to Kotlin nullables
 
 
   println(country)            // This won't be null

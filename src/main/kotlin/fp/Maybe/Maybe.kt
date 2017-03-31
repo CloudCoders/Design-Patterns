@@ -1,55 +1,31 @@
 package fp.Maybe
 
-sealed abstract class Maybe<T> {
+sealed class Maybe<out A> {
+
   companion object {
-    fun <T> of(value : T) : Just<T> = Just(value)
-
-    fun <T> nothing() : Nothing<T> = Nothing()
-
-    fun <T> fromNullable(value : T?) : Maybe<T> =
-      if (value != null) Just(value) else Nothing()
+    inline fun <reified A : Any> fromNullable(a: A?) : Maybe<A> = if (a != null) Maybe.Just(a) else Maybe.None
+    operator fun <A> invoke(a: A): Maybe<A> = Maybe.Just(a)
   }
 
-  abstract fun isJust() : Boolean
+  abstract val isEmpty : Boolean
 
-  abstract fun isNothing() : Boolean
+  inline fun <B> fold(ifEmpty : () -> B, fn: (A) -> B): B = when (this) {
+    is Maybe.None -> ifEmpty()
+    is Maybe.Just -> fn(value)
+  }
 
-  abstract fun getValue() : T?
+  inline fun <B> map(fn : (A) -> B) : Maybe<B> = fold({ Maybe.None }, { a -> Maybe.Just(fn(a)) })
 
-  abstract fun map(fn : (T) -> T?) : Maybe<T>
+  inline fun <B> flatMap(fn : (A) -> Maybe<B>): Maybe<B> = fold({ Maybe.None }, { a -> fn(a) })
 
-  abstract fun apply(fn : (T) -> Any?) : Maybe<Any?>
+  data class Just<out A>(val value: A) : Maybe<A>() {
+    override val isEmpty: Boolean = false
+  }
 
-  abstract fun getOrElse(other : Any? = null) : Any?
-
+  object None : Maybe<Nothing>() {
+    override val isEmpty: Boolean = true
+  }
 }
 
-class Just<T>(private val value : T) : Maybe<T>() {
-  override fun isJust() : Boolean = true
 
-  override fun isNothing() : Boolean = false
-
-  override fun getValue(): T? = value
-
-  override fun map(fn: (T) -> T?): Maybe<T> = fromNullable(fn(value))
-
-  override fun apply(fn: (T) -> Any?): Maybe<Any?> = fromNullable(fn(value))
-
-  override fun getOrElse(other: Any?): Any? = value as Any
-}
-
-class Nothing<T> : Maybe<T>() {
-
-  override fun isJust(): Boolean = false
-
-  override fun isNothing(): Boolean = true
-
-  override fun getValue(): T? = null
-
-  override fun map(fn: (T) -> T?): Maybe<T> = this
-
-  override fun apply(fn: (T) -> Any?): Maybe<Any?> = nothing()
-
-  override fun getOrElse(other: Any?): Any? = other
-
-}
+fun <B> Maybe<B>.getOrElse(default: () -> B): B = fold({ default() }, { it })
