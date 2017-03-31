@@ -4,24 +4,27 @@ data class Point(val x: Int, val y: Int)
 
 data class Soldier(val name: String)
 
-class SoldierFactory(private val soldiers: MutableList<Soldier> = mutableListOf(),
-                     private val points: MutableList<Point> = mutableListOf()) {
+class Flyweight<A>(val values: MutableSet<A> = mutableSetOf()) {
+
+  fun getFactory(value: A): A {
+    values.add(value)
+    return values.filter { it == value }.first()
+  }
+
+}
+
+class SoldierFactory(val soldiers: Flyweight<Soldier> = Flyweight<Soldier>(),
+                     val points: Flyweight<Point> = Flyweight<Point>()) {
+
+  constructor(soldiers: List<Soldier> = emptyList(), points: List<Point> = emptyList())
+    : this(Flyweight(soldiers.toMutableSet()), Flyweight(points.toMutableSet()))
 
   fun getSoldier(name: String): Soldier {
-    if (!soldiers.map { it.name }.contains(name)) {
-      soldiers.add(Soldier(name))
-    }
-
-    return soldiers.filter { it.name == name }.first()
+    return soldiers.getFactory(Soldier(name))
   }
 
   fun getPoint(x: Int, y: Int): Point {
-    var point = Point(x, y)
-    if (!points.contains(point)) {
-      points.add(point)
-    }
-
-    return points.filter { it == point }.first()
+    return points.getFactory(Point(x, y))
   }
 
 }
