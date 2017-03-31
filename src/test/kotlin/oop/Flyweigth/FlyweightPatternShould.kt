@@ -15,9 +15,9 @@ class FlyweightPatternShould {
     val soldiers = mutableListOf<Soldier>()
     val soldiersAttack = SoldierClient(SoldierFactory(soldiers))
 
-    soldiersAttack.attack("Pedro", Point(1, 2))
-    soldiersAttack.attack("Pedro", Point(2, 2))
-    soldiersAttack.attack("Pedro", Point(3, 5))
+    soldiersAttack.attack("Pedro", 1, 2)
+    soldiersAttack.attack("Pedro", 2, 2)
+    soldiersAttack.attack("Pedro", 2, 2)
 
     assertThat(soldiers.filter { it.name == "Pedro" }.size, `is`(1))
   }
@@ -41,5 +41,17 @@ class FlyweightPatternShould {
     val soldierTwo = soldierFactory.getSoldier("Pedro")
 
     assertTrue(soldierOne === soldierTwo)
+  }
+
+  @Test
+  fun `Have one instance of points when only one instance of point is created`() {
+    val points = mutableListOf<Point>()
+    val soldiersAttack = SoldierClient(SoldierFactory(points = points))
+
+    soldiersAttack.attack("Pedro", 3, 3)
+    soldiersAttack.attack("Forest", 3, 3)
+    soldiersAttack.attack("Forest", 3, 3)
+
+    assertThat(points.size, `is`(1))
   }
 }
