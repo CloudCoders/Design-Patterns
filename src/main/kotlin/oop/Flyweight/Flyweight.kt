@@ -1,26 +1,20 @@
 package oop.Flyweight
 
-import java.awt.Point
-class Flyweight{
-  companion object{
-    var objectInstances = 0
-  }
-}
 fun main(args: Array<String>) {
-  val soldiers = listOf(
-    SoldierClient(Admiral.TYPE),
-    SoldierClient(Admiral.TYPE),
-    SoldierClient(Captain.TYPE),
-    SoldierClient(Captain.TYPE),
-    SoldierClient(Admiral.TYPE),
-    SoldierClient(Admiral.TYPE)
+  val soldiers = mutableListOf(
+    Soldier("Pedro"),
+    Soldier("Ryan"),
+    Soldier("Forest")
   )
-  soldiers[0].attack(Point(1,2))
-  soldiers[1].attack(Point(10,12))
-  soldiers[2].attack(Point(9,5))
-  soldiers[3].attack(Point(11,7))
-  soldiers[4].attack(Point(21,3))
 
-  System.out.println(Flyweight.objectInstances)
+  val soldiersAttacks = SoldierClient(SoldierFactory(soldiers))
+  soldiersAttacks.attack("Pedro", Point(1,2))
+  soldiersAttacks.attack("Ryan", Point(10,12))
+  soldiersAttacks.attack("Ryan", Point(13,2))
+  soldiersAttacks.attack("Forest", Point(133,233))
+  soldiersAttacks.attack("Pedro", Point(1,1))
+  soldiersAttacks.attack("Pedro", Point(2,2))
+  soldiersAttacks.attack("Pedro", Point(44,5))
 
+  soldiersAttacks.attacks.forEach(::println)
 }
