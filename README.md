@@ -1,67 +1,199 @@
-# OOP Design Patterns and FP paradigm
+# Kotlin OOP and FP Design Patterns
 
-## DONE 
+## Index
 
-### Creational patterns:
+* OOP
+  * [Behavioral Patterns](#behavioral)
+    * [ ] Chain of Responsability
+    * [x] Command
+    * [ ] Interpreter
+    * [ ] Iterator
+    * [ ] Mediator
+    * [ ] Memento
+    * [ ] Null Object
+    * [ ] Observer
+    * [ ] State
+    * [ ] Template
+    * [ ] Visitor
+  * Creational Patterns
+    * [ ] Abstract Factory
+    * [ ] Builder
+    * [x] Factory
+    * [ ] Object Pool
+    * [ ] Prototype
+    * [x] Singleton
+  * Structural Patterns
+    * [ ] Adapter
+    * [ ] Bridge
+    * [x] Composite
+    * [x] Decorator
+    * [x] Facade
+    * [ ] Flyweight
+    * [ ] Proxy
+* FP
+  * Monads
+    * [x] Option/Maybe
+    * [ ] Either
 
-- [x] Abstract factory: Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+Behavioral
+==========
 
-### Structural patterns:
+Chain of Responsability
+-----------------------
 
-- [x] Decorator:	Attach additional responsibilities to an object dynamically keeping the same interface. Decorators provide a flexible alternative to subclassing for extending functionality.
+> It avoids coupling the sender of a request to its receiver by giving more than one object a chance to handle the request. It pass the request along the chain until an object handles it.
 
-- [x] oop.Composite:	Compose objects into tree structures to represent part-whole hierarchies. oop.Composite lets clients treat individual objects and compositions of objects uniformly.
+**In progress**
 
-- [x] Facade:	Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.
+[Command](/src/main/kotlin/oop/Command)
+-------
 
-### Behavioral patterns:
+> It is an _object-oriented_ callback. Encapsulates a request as an object.
+> It decouples the object that invokes the operation from the one that knows how to perform it.
 
-- [x] Command: 	Encapsulate a request as an object, thereby allowing for the parameterization of clients with different requests, and the queuing or logging of requests. It also allows for the support of undoable operations.
+### Example
 
-- [x] Strategy: Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+```kotlin
+interface Command {
+  fun matches(command: String): Boolean
+  fun execute()
+}
 
-## TODO
+class ChooseNoodlesCommand(val cart: Cart) : Command {
+  companion object {
+    val CHOOSE_NOODLES : String = "1"
+  }
+  
+  override fun matches(command: String): Boolean = command == CHOOSE_NOODLES
+  
+  override fun execute() {
+    cart.chooseNoodles()
+  }
+}
 
-### Creational patterns:
+class Processor(val commands: List<Command>,
+                val help: Command) {
+                
+  fun process(command: String): Command = 
+    commands.filter { it.matches(command) }.getOrElse(0) { help } 
+    
+}
+```
 
+### Usage
 
-	
-- [ ] Builder:	Separate the construction of a complex object from its representation, allowing the same construction process to create various representations.
-	
-- [ ] Factory method:	Define an interface for creating a single object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses (dependency injection[19]).
+```kotlin
+val scanner = Scanner(System.`in`)
+val cart = Cart(scanner)
+val commands = listOf(
+  ChooseNoodlesCommand(cart),
+  // ...
+)
+val proc = Proccessor(commands, CommandNotFound())
 
-- [ ] Lazy initialization:	Tactic of delaying the creation of an object, the calculation of a value, or some other expensive process until the first time it is needed. This pattern appears in the GoF catalog as "virtual proxy", an implementation strategy for the Proxy pattern.	Yes	No	PoEAA[20]
+var commandChoice = -1
+do {
 
-- [ ] Multiton:	Ensure a class has only named instances, and provide a global point of access to them.
+  commandChoice = scanner.nextInt()
+  proc.proccess("$commandChoice").execute()
+  
+} while (commandChoice != 0)
 
-- [ ] Object pool: Avoid expensive acquisition and release of resources by recycling objects that are no longer in use. Can be considered a generalisation of connection pool and thread pool patterns.
+```
 
-- [ ] Prototype: Specify the kinds of objects to create using a prototypical instance, and create new objects from the 'skeleton' of an existing object, thus boosting performance and keeping memory footprints to a minimum.
+Interpreter
+----------
 
-- [ ] Resource acquisition is initialization (RAII): Ensure that resources are properly released by tying them to the lifespan of suitable objects.
+> Given a language, define a representation for its grammar along with an interpreter that uses the representation to interpret sentences in the language
 
-- [ ] Singleton: Ensure a class has only one instance, and provide a global point of access to it.
+**In progress**
 
-### Structural patterns:
+Iterator
+--------
 
-- [ ] Adapter or Wrapper or Translator:	Convert the interface of a class into another interface clients expect. An adapter lets classes work together that could not otherwise because of incompatible interfaces. The enterprise integration pattern equivalent is the translator.
+> It provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation
 
-- [ ] Bridge:	Decouple an abstraction from its implementation allowing the two to vary independently.
+**In progress**
 
-- [ ] Extension object:	Adding functionality to a hierarchy without changing the hierarchy.	No	No	Agile Software Development, Principles, Patterns, and Practices[21]
+Mediator
+---------
 
-- [ ] Flyweight:	Use sharing to support large numbers of similar objects efficiently.
+> Define an object that encapsulates how a set of objects interact. It designs an intermediary to decouple many peers.
 
-- [ ] Front controller:	The pattern relates to the design of Web applications. It provides a centralized entry point for handling requests.
+**In progress**
 
-- [ ] Marker:	Empty interface to associate metadata with a class.	No	No	Effective Java[22]
+Memento
+---------
 
-- [ ] Module	Group several related elements, such as classes, singletons, methods, globally used, into a single conceptual entity.
+> It captures and externalizes an object's internal state so it can get back to this state later without violating encapsulation
 
-- [ ] Proxy	Provide a surrogate or placeholder for another object to control access to it.
-	
-- [ ] Twin [23]	Twin allows modeling of multiple inheritance in programming languages that do not support this feature.
+**In progress**
 
-### Behavioral patterns:
+Null Object
+-----------
 
-//TODO ...
+> It encapsulates the absence of an object by providing an alternative that offers suitable default behaviour for doing nothing.
+> Useful to abstract the handling of null away from the client
+
+**In progress**
+
+Observer
+------------
+
+> It defines a _one-to-many_ dependency between object so that when one changes its state, all its dependents are notified and updated automatically.
+
+**In progress**
+
+State
+-------
+
+> It allows an object to alter its behaviour when its internal state changes.
+
+**In progress**
+
+[Strategy](/src/main/kotlin/oop/Strategy)
+---------
+
+> Define a family of algorithms, encapsulate each one, and make them interchangeable. It captures the abstraction in an interface and buries implementation details in derived classes.
+
+In Kotlin, we can implement this pattern with only functions because of the support for first order functions.
+
+### Example
+
+```kotlin
+val GeneralStrategy : (Double) -> Double = { it + it * 0.21 }
+
+val ReducedStrategy : (Double) -> Double = { it + it * 0.10 }
+
+val SuperReducedStrategy = { cost: Double -> cost + cost * 0.04 } // Alternative way to define it
+
+```
+
+### Usage
+
+```kotlin
+var ivaStrategy = GeneralStrategy  // You can change the strategy in execution time
+val price = 3.14
+
+println(ivaStrategy(price))
+
+```
+
+Template
+---------
+
+> Define an skeleton of an algorithm in an operation, deferring some steps to client subclasses. These subclasses can redefine certain steps of an algorightm without changing its structure
+
+**In progress**
+
+Visitor
+------
+
+> Represent an operation to be performed on the elements of an object structure. It lets you define a new operation without changing the classes of the elements on which it operates.
+
+**In progress**
+
+Creational
+==========
+
+To be completed...
