@@ -4,24 +4,24 @@
 
 * OOP
   * [Behavioral Patterns](#behavioral)
-    * [ ] Chain of Responsability
-    * [x] Command
-    * [ ] Interpreter
-    * [ ] Iterator
-    * [ ] Mediator
-    * [ ] Memento
-    * [ ] Null Object
-    * [ ] Observer
-    * [ ] State
-    * [ ] Template
-    * [ ] Visitor
+    * [ ] [Chain of Responsability](#chain-of-responsability)
+    * [x] [Command](#command)
+    * [ ] [Interpreter](#interpreter)
+    * [ ] [Iterator](#iterator)
+    * [ ] [Mediator](#mediator)
+    * [ ] [Memento](#memento)
+    * [ ] [Null Object](#null-object)
+    * [ ] [Observer](#observer)
+    * [ ] [State](#state)
+    * [ ] [Template](#template)
+    * [ ] [Visitor](#visitor)
   * Creational Patterns
-    * [ ] Abstract Factory
-    * [ ] Builder
-    * [x] Factory
-    * [ ] Object Pool
-    * [ ] Prototype
-    * [x] Singleton
+    * [ ] [Abstract Factory](#abstract-factory)
+    * [ ] [Builder](#builder)
+    * [x] [Factory](#factory)
+    * [ ] [Object Pool](#object-pool)
+    * [ ] [Prototype](#prototype)
+    * [x] [Singleton](#singleton)
   * Structural Patterns
     * [ ] Adapter
     * [ ] Bridge
@@ -196,4 +196,84 @@ Visitor
 Creational
 ==========
 
-To be completed...
+Abstract Factory
+----------------
+
+> It provides an interface for creating families of related dependents objects without specifying their concrete classes
+
+**In progress**
+
+Builder
+---------
+
+> It separates the construction of a complex object from its representation so that the same construction process can create different representations.
+
+**In progress**
+
+[Factory](/src/main/kotlin/oop/Factory)
+--------
+
+> It defines an interface for creating an object, but let subclasses decide which class to instantiate.
+
+### Example
+```kotlin
+class NoodlesFactory {
+  fun getNoodles(noodleType: Int): Noodles {
+    when (noodleType) {
+      1 -> return EggNoodles()
+      2 -> return UdonNoodles()
+      3 -> return WheatNoodles()
+      else -> throw NoNoodlesMatchException()
+    }
+  }
+}
+
+```
+
+### Usage
+
+```kotlin
+val scanner = Scanner(System.`in`)
+val noodlesFactory = NoodlesFactory()
+
+val noodlesType = scanner.nextInt()
+val noodles = noodlesFactory.getNoodles(noodlesType)
+```
+
+Object Pool
+-----------
+
+> An Object Pool can offer a significant performance boost, it is most effective in situations where the cost of initializing a class instance is high.
+
+**In progress**
+
+Prototype
+-----------
+
+> It specifies the kind of objects to create using a prototypical instance and create new objects by copying this instance.
+
+**In progress**
+
+Singleton
+---------
+
+> It ensures a class has only one instance and provide a global point of access to it.
+
+In Kotlin we can make use of the reserved keyword `Object`
+
+### Example
+
+```kotlin
+object OneInstance {
+
+  fun sayHello() = println("Hello")
+
+}
+
+```
+
+### Usage
+
+```kotlin
+OneInstance.sayHello()
+```
