@@ -1,4 +1,4 @@
-package oop.Command.ResponsabilityChain
+package oop.ResponsabilityChain
 
 sealed class Message(val message : String) {
 

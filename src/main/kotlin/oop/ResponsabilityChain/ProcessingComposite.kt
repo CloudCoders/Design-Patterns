@@ -1,4 +1,4 @@
-package oop.Command.ResponsabilityChain
+package oop.ResponsabilityChain
 
 object ProcessingComposite : MessageProcessor {
 

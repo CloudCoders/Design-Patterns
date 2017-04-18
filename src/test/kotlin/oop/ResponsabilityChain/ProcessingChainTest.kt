@@ -1,4 +1,4 @@
-package oop.Command.ResponsabilityChain
+package oop.ResponsabilityChain
 
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat

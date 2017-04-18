@@ -1,4 +1,4 @@
-package oop.Command.ResponsabilityChain
+package oop.ResponsabilityChain
 
 class PasswordProcessor(val next : MessageProcessor? = null) : MessageProcessor {
 
