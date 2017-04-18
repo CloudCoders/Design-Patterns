@@ -15,25 +15,27 @@
     * [ ] [State](#state)
     * [ ] [Template](#template)
     * [ ] [Visitor](#visitor)
-  * Creational Patterns
+  * [Creational Patterns](#creational)
     * [ ] [Abstract Factory](#abstract-factory)
     * [ ] [Builder](#builder)
     * [x] [Factory](#factory)
     * [ ] [Object Pool](#object-pool)
     * [ ] [Prototype](#prototype)
     * [x] [Singleton](#singleton)
-  * Structural Patterns
-    * [ ] Adapter
-    * [ ] Bridge
-    * [x] Composite
-    * [x] Decorator
-    * [x] Facade
-    * [ ] Flyweight
-    * [ ] Proxy
+  * [Structural Patterns](#structural)
+    * [ ] [Adapter](#adapter)
+    * [ ] [Bridge](#bridge)
+    * [x] [Composite](#brigde)
+    * [x] [Decorator](#decorator)
+    * [x] [Facade](#facade)
+    * [ ] [Flyweight](#flyweight)
+    * [ ] [Proxy](#proxy)
 * FP
-  * Monads
-    * [x] Option/Maybe
+  * [Monads](#monads)
+    * [x] [Option/Maybe](#option)
     * [ ] Either
+    
+## Object oriented paradigm
 
 Behavioral
 ==========
@@ -277,3 +279,213 @@ object OneInstance {
 ```kotlin
 OneInstance.sayHello()
 ```
+
+Structural
+==========
+
+Adapter
+--------
+
+> It converts an interface of a class into another interface clients expect. It lets classes work together that couldn't otherwise.
+
+**In progress**
+
+Bridge
+------
+
+> It decouples an abstraction from its implementation so that the two can vary independently.
+
+**In progress**
+
+[Composite](/src/main/kotlin/oop/Composite)
+--------
+
+> Compose objects into tress structures to represent whole-part hierarchies. It lets clients treat individual objects and compositions uniformly.
+
+### Example
+
+```kotlin
+interface Cooker {
+  fun cook()
+}
+
+interface ChineseCooker(private val cookers: MutableList<Cooker> = mutableListOf()): Cooker {
+  fun add(cooker: Cooker) = cookers.add(cooker)
+  
+  override fun cook() {
+    println("Cooking plate with soy sauce")
+    cookers.forEach(Cooker::cook)
+  }
+}
+
+interface DeepFryer(): Cooker {
+  override fun cook() {
+    println("And frying")
+  }
+}
+
+class Kitchen(private val cookers: MutableList<Cooker> = mutableListOf()): Cooker {
+  fun add(cooker: Cooker) {
+    cookers.add(cooker)
+  }
+  
+  fun remove(cooker: Cooker) {
+    cookers.remove(cooker)
+  }
+  
+  override fun cook() {
+    cookers.forEach(Cooker::cook)
+  }
+}
+
+```
+
+### Usage
+
+```kotlin
+val chinese = ChineseCooker()
+chinese.add(DeepFryer())
+
+val cookers = mutableListOf(chinese)
+val kitchen = Kitchen(cookers)
+kitchen.cook()
+```
+
+[Decorator](/src/main/kotlin/oop/Decorator)
+----------
+
+> It attachs additional responsabilities to an object dynamically.
+
+In Kotlin, we don't need to redefine the methods of the decorated interface. We can use `by` to delegate those methods to the decorated class.
+
+### Example
+
+```kotlin
+interface Noodles {
+  fun calculateCost(): Double
+}
+
+class UdonNoodles : Noodles {
+  override fun calculateCost() = 3.50
+}
+
+abstract class SauceDecorator(private val noodles: Noodles): Noodles by noodles {
+  abstract val SPICINESS: Int
+}
+
+class RedPepperSauce(noodles: Noodles): SauceDecorator(noodles) {
+  override val SPICINESS: Int = 3
+}
+```
+### Usage
+
+```kotlin
+val udonNoodles = UdonNoodles()
+val udonNoodlesWithRedPepperSauce = RedPepperSauce(udonNoodles)
+
+println(udonNoodlesWithRedPepperSauce.calculateCost()) // 3.50
+println(udonNoodlesWithRedPepperSauce.SPICINESS) // 3
+```
+
+[Facade](/src/main/kotlin/oop/Facade)
+----------
+
+> It provides a unified interface to a set of interfaces in a subsystem.
+
+### Example
+
+```kotlin
+class NetInvoiceSalaryFacade(val iva: IVAOperation = IVAOperation(),
+                             val irpf: IRPFOperation = IRPFOperation()) {
+  fun calculate(salary: Double): Double =
+    salary + iva.apply(salary) - irpf.apply(salary)
+    
+  fun calculateAnnual(monthlySalary: Double): Double = 
+    calculate(monthlySalary * 12)
+}
+
+class IVAOperation {
+  fun apply(amount: Double): Double = amount + (amount * 0.21)
+}
+
+class IRPFOperation {
+  fun apply(amount: Double): Double = amount + (amount * 0.15)
+}
+```
+
+### Usage
+
+```kotlin
+val facade = NetInvoiceSalaryFacade()
+println(facade.calculateAnnual(1000))
+```
+
+Flyweight
+----------
+
+> It uses sharing to support large numbers of fine-grained objects efficiently
+
+**In progress**
+
+Proxy
+------
+
+> It provides a placeholder for another object to control access to it.
+> It is an extra level of indirection to support controlled or intelligent access.
+
+**In progress**
+
+## Functional paradigm
+
+Monads
+========
+
+[Option](/src/main/kotlin/fp/Maybe) AKA Maybe
+------
+
+> It represents a value which is of type _A_ or none.
+
+### Example
+
+```kotlin
+sealed class Maybe<A> {
+  companion object {
+    fun <A: Any> fromNullable(a: A?): Maybe<A> = if (a != null) Maybe.Just(a) else Maybe.None
+  }
+  
+  abstract val isEmpty: Boolean
+  
+  fun <B> fold(ifEmpty: () -> B, fn: (A) -> B): B = when (this) {
+    is Maybe.None -> ifEmpty()
+    is Maybe.Just -> fn(value)
+  }
+}
+
+fun <B> Maybe<B>.getOrElse(default: () -> B): B = fold({ default() }, { it })
+```
+
+### Usage
+
+```kotlin
+val returnExplanatoryString: () -> String = { "Result is null" }
+val listOfCountries = listOf("Spain", "France", "Italy")
+val getValueInList: (String) -> (List<String>) -> String? = { item -> 
+  {
+    list -> list.find { it == item }
+  }
+}
+val getTanzaniaInList = getValueInList("Tanzania")
+
+val maybeTanzania = Maybe.fromNullable(getTanzaniaInList(listOfCountries))
+
+val country = maybeTanzania
+  .map(String::toUpperCase)
+  .getOrElse(returnExplanatoryString)
+val countryClassic = listOfCountries.find { it == "Tanzania" }?.toUpperCase()
+
+println(country)        // This won't be null
+println(countryClassic) // This can be null
+
+```
+
+
