@@ -4,7 +4,7 @@
 
 * OOP
   * [Behavioral Patterns](#behavioral)
-    * [ ] [Chain of Responsability](#chain-of-responsability)
+    * [x] [Chain of Responsability](#chain-of-responsability)
     * [x] [Command](#command)
     * [ ] [Interpreter](#interpreter)
     * [ ] [Iterator](#iterator)
