@@ -54,21 +54,21 @@ interface MessageProcessor {
   fun process(message: Message): String
 }
 
-interface UsernameProcessor(val next: MessageProcessor? = null): MessageProcessor {
+class UsernameProcessor(val next: MessageProcessor? = null): MessageProcessor {
   override fun process(message: Message): String = when (message) {
     is Message.Username -> message.message.toUpperCase()
     else -> next?.process(message) ?: message.message
   }
 }
 
-interface PasswordProcessor(val next: MessageProcessor? = null): MessageProcessor {
+class PasswordProcessor(val next: MessageProcessor? = null): MessageProcessor {
   override fun process(message: Message): String = when (message) {
     is Message.Password -> message.message.map { '*' }.joinToString(separator = "")
     else -> next?.process(message) ?: message.message
   }
 }
 
-interface PlainTextProcessor(val next: MessageProcessor? = null): MessageProcessor {
+class PlainTextProcessor(val next: MessageProcessor? = null): MessageProcessor {
   override fun process(message: Message): String = when (message) {
     is Message.PlainText -> message.message
     else -> next?.process(message) ?: message.message
