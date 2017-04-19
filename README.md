@@ -40,12 +40,59 @@
 Behavioral
 ==========
 
-Chain of Responsability
+[Chain of Responsability](/src/main/kotlin/oop/ResponsabilityChain)
 -----------------------
 
 > It avoids coupling the sender of a request to its receiver by giving more than one object a chance to handle the request. It pass the request along the chain until an object handles it.
 
-**In progress**
+This pattern is usually used within a [Composite](#composite)
+
+### Example
+
+```kotlin
+interface MessageProcessor {
+  fun process(message: Message): String
+}
+
+interface UsernameProcessor(val next: MessageProcessor? = null): MessageProcessor {
+  override fun process(message: Message): String = when (message) {
+    is Message.Username -> message.message.toUpperCase()
+    else -> next?.process(message) ?: message.message
+  }
+}
+
+interface PasswordProcessor(val next: MessageProcessor? = null): MessageProcessor {
+  override fun process(message: Message): String = when (message) {
+    is Message.Password -> message.message.map { '*' }.joinToString(separator = "")
+    else -> next?.process(message) ?: message.message
+  }
+}
+
+interface PlainTextProcessor(val next: MessageProcessor? = null): MessageProcessor {
+  override fun process(message: Message): String = when (message) {
+    is Message.PlainText -> message.message
+    else -> next?.process(message) ?: message.message
+  }
+}
+```
+
+### Usage
+
+```kotlin
+object ProcessingComposite : MessageProcessor {
+  val bottom = PlainTextProcessor()
+  val next = PasswordProcessor(bottom)
+  val usernameProcessor = UsernameProcessor(next)
+  
+  override fun process(message: Message): String = usernameProcessor.process(message)
+}
+
+val password = Message.Password("SuperSecret")
+val username = Message.Username("@Cotel")
+
+println(ProcessingComposite.process(password))    // "***********"
+println(ProcessingComposite.process(username))    // "@COTEL"
+```
 
 [Command](/src/main/kotlin/oop/Command)
 -------
