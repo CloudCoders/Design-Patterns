@@ -15,7 +15,7 @@ Kotlin OOP and FP Design Patterns
     * [ ] [Memento](#memento)
     * [ ] [Null Object](#null-object)
     * [ ] [Observer](#observer)
-    * [ ] [State](#state)
+    * [x] [State](#state)
     * [ ] [Template](#template)
     * [ ] [Visitor](#visitor)
   * [Creational Patterns](#creational)
@@ -196,12 +196,57 @@ Observer
 
 **In progress**
 
-State
+[State](/src/main/kotlin/oop/State)
 -------
 
 > It allows an object to alter its behaviour when its internal state changes.
 
-**In progress**
+We can use Kotlin's [sealed classes](https://kotlinlang.org/docs/reference/sealed-classes.html) to define a restricted hierarchy so that the current _State_ can only have limited values from a set.
+
+### Example
+
+```kotlin
+interface State {
+  fun next(): State
+}
+
+sealed class SemaphoreStates : State {
+  object Red : SemaphoreStates() {
+    override fun next() = Green
+  }
+
+  object Green : SemaphoreStates() {
+    override fun next() = Yellow
+  }
+
+  object Yellow : SemaphoreStates() {
+    override fun next() = Red
+  }
+}
+
+class Semaphore(startingState: State = SemaphoreStates.Red) {
+  var state = startingState
+    private set
+
+  fun nextLight() {
+    state = state.next()
+  }
+}
+```
+
+### Usage
+
+```kotlin
+fun Semaphore.canICross() = this.state is SemaphoreStates.Green 
+
+val semaphore = Semaphore()
+
+println(semaphore.canICross()) // false
+
+semaphore.nextLight()
+
+println(semaphore.canICross()) // true
+```
 
 [Strategy](/src/main/kotlin/oop/Strategy)
 ---------

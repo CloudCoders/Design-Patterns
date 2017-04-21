@@ -1,38 +1,28 @@
 package oop.State
 
 interface State {
-
   fun next(): State
 }
 
 sealed class SemaphoreStates : State {
-
   object Red : SemaphoreStates() {
-    override fun next(): State {
-      println("Red")
-      return Green
-    }
+    override fun next() = Green
   }
 
   object Green : SemaphoreStates() {
-    override fun next(): State {
-      println("Green")
-      return Ambar
-    }
+    override fun next() = Yellow
   }
 
-  object Ambar : SemaphoreStates() {
-    override fun next(): State {
-      println("Ambar")
-      return Red
-    }
+  object Yellow : SemaphoreStates() {
+    override fun next() = Red
   }
 }
 
-class Semaphore(var state: State = SemaphoreStates.Red) {
+class Semaphore(startingState: State = SemaphoreStates.Red) {
+  var state = startingState
+    private set
 
-  fun changeState() {
+  fun nextLight() {
     state = state.next()
   }
-
 }
