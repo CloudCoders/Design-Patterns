@@ -1,4 +1,7 @@
-# Kotlin OOP and FP Design Patterns
+Kotlin OOP and FP Design Patterns
+=============
+[![Build Status](https://travis-ci.org/CloudCoders/Design-Patterns.svg?branch=master)](https://travis-ci.org/CloudCoders/Design-Patterns)
+[![Kotlin version badge](https://img.shields.io/badge/kotlin-1.1.1-blue.svg)](http://kotlinlang.org/)
 
 ## Index
 
@@ -12,7 +15,7 @@
     * [ ] [Memento](#memento)
     * [ ] [Null Object](#null-object)
     * [x] [Observer](#observer)
-    * [ ] [State](#state)
+    * [x] [State](#state)
     * [ ] [Template](#template)
     * [ ] [Visitor](#visitor)
   * [Creational Patterns](#creational)
@@ -221,12 +224,57 @@ shop.currentCustomers++ // prints "A new customer entered ..."
 shop.currentCustomers-- // prints "A customer left ..."
 ```
 
-State
+[State](/src/main/kotlin/oop/State)
 -------
 
 > It allows an object to alter its behaviour when its internal state changes.
 
-**In progress**
+We can use Kotlin's [sealed classes](https://kotlinlang.org/docs/reference/sealed-classes.html) to define a restricted hierarchy so that the current _State_ can only have limited values from a set.
+
+### Example
+
+```kotlin
+interface State {
+  fun next(): State
+}
+
+sealed class SemaphoreStates : State {
+  object Red : SemaphoreStates() {
+    override fun next() = Green
+  }
+
+  object Green : SemaphoreStates() {
+    override fun next() = Yellow
+  }
+
+  object Yellow : SemaphoreStates() {
+    override fun next() = Red
+  }
+}
+
+class Semaphore(startingState: State = SemaphoreStates.Red) {
+  var state = startingState
+    private set
+
+  fun nextLight() {
+    state = state.next()
+  }
+}
+```
+
+### Usage
+
+```kotlin
+fun Semaphore.canICross() = this.state is SemaphoreStates.Green 
+
+val semaphore = Semaphore()
+
+println(semaphore.canICross()) // false
+
+semaphore.nextLight()
+
+println(semaphore.canICross()) // true
+```
 
 [Strategy](/src/main/kotlin/oop/Strategy)
 ---------
