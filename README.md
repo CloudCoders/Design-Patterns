@@ -11,7 +11,7 @@
     * [ ] [Mediator](#mediator)
     * [ ] [Memento](#memento)
     * [ ] [Null Object](#null-object)
-    * [ ] [Observer](#observer)
+    * [x] [Observer](#observer)
     * [ ] [State](#state)
     * [ ] [Template](#template)
     * [ ] [Visitor](#visitor)
@@ -186,12 +186,38 @@ Null Object
 
 **In progress**
 
-Observer
+[Observer](/src/main/kotlin/oop/Observer)
 ------------
 
 > It defines a _one-to-many_ dependency between object so that when one changes its state, all its dependents are notified and updated automatically.
 
-**In progress**
+### Example
+
+```kotlin
+interface Observer<in T> {
+  fun onValueChange(newValue: T, oldValue: T)
+}
+
+class CustomersObserver : Observer<Int> {
+  override fun onValueChange(newValue: Int, oldValue: Int) = when {
+    newValue > oldValue -> println("A new customer entered. Current customers $newValue")
+    else -> println("A customer left. Current customers: $newValue")
+  }
+}
+
+class Shop(private val observer: Observer<Int>) {
+  var currentCustomers by Delegates.observable(0) { _, old, new ->
+    observer.onValueChange(new, old)
+  }
+}
+```
+
+### Usage
+
+```kotlin
+shop.currentCustomers++ // prints "A new customer entered ..."
+shop.currentCustomers-- // prints "A customer left ..."
+```
 
 State
 -------
