@@ -191,6 +191,8 @@ Null Object
 
 > It defines a _one-to-many_ dependency between object so that when one changes its state, all its dependents are notified and updated automatically.
 
+In Kotlin, this pattern is extremely easy to implement thanks to [property delegation](https://kotlinlang.org/docs/reference/delegated-properties.html)
+
 ### Example
 
 ```kotlin
@@ -429,7 +431,7 @@ kitchen.cook()
 
 > It attachs additional responsabilities to an object dynamically.
 
-In Kotlin, we don't need to redefine the methods of the decorated interface. We can use `by` to delegate those methods to the decorated class.
+In Kotlin, we don't need to redefine the methods of the decorated interface. We can use `by` to [delegate](https://kotlinlang.org/docs/reference/delegation.html) those methods to the decorated class.
 
 ### Example
 
