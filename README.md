@@ -1,4 +1,7 @@
-# Kotlin OOP and FP Design Patterns
+Kotlin OOP and FP Design Patterns
+=============
+[![Build Status](https://travis-ci.org/CloudCoders/Design-Patterns.svg?branch=master)](https://travis-ci.org/CloudCoders/Design-Patterns)
+[![Kotlin version badge](https://img.shields.io/badge/kotlin-1.1.1-blue.svg)](http://kotlinlang.org/)
 
 ## Index
 
