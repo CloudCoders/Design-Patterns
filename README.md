@@ -14,7 +14,7 @@ Kotlin OOP and FP Design Patterns
     * [ ] [Mediator](#mediator)
     * [ ] [Memento](#memento)
     * [ ] [Null Object](#null-object)
-    * [ ] [Observer](#observer)
+    * [x] [Observer](#observer)
     * [x] [State](#state)
     * [ ] [Template](#template)
     * [ ] [Visitor](#visitor)
@@ -189,12 +189,40 @@ Null Object
 
 **In progress**
 
-Observer
+[Observer](/src/main/kotlin/oop/Observer)
 ------------
 
 > It defines a _one-to-many_ dependency between object so that when one changes its state, all its dependents are notified and updated automatically.
 
-**In progress**
+In Kotlin, this pattern is extremely easy to implement thanks to [property delegation](https://kotlinlang.org/docs/reference/delegated-properties.html)
+
+### Example
+
+```kotlin
+interface Observer<in T> {
+  fun onValueChange(newValue: T, oldValue: T)
+}
+
+class CustomersObserver : Observer<Int> {
+  override fun onValueChange(newValue: Int, oldValue: Int) = when {
+    newValue > oldValue -> println("A new customer entered. Current customers $newValue")
+    else -> println("A customer left. Current customers: $newValue")
+  }
+}
+
+class Shop(private val observer: Observer<Int>) {
+  var currentCustomers by Delegates.observable(0) { _, old, new ->
+    observer.onValueChange(new, old)
+  }
+}
+```
+
+### Usage
+
+```kotlin
+shop.currentCustomers++ // prints "A new customer entered ..."
+shop.currentCustomers-- // prints "A customer left ..."
+```
 
 [State](/src/main/kotlin/oop/State)
 -------
@@ -451,7 +479,7 @@ kitchen.cook()
 
 > It attachs additional responsabilities to an object dynamically.
 
-In Kotlin, we don't need to redefine the methods of the decorated interface. We can use `by` to delegate those methods to the decorated class.
+In Kotlin, we don't need to redefine the methods of the decorated interface. We can use `by` to [delegate](https://kotlinlang.org/docs/reference/delegation.html) those methods to the decorated class.
 
 ### Example
 
