@@ -17,7 +17,7 @@ Kotlin OOP and FP Design Patterns
     * [x] [Observer](#observer)
     * [x] [State](#state)
     * [ ] [Template](#template)
-    * [ ] [Visitor](#visitor)
+    * [x] [Visitor](#visitor)
   * [Creational Patterns](#creational)
     * [ ] [Abstract Factory](#abstract-factory)
     * [ ] [Builder](#builder)
@@ -311,12 +311,64 @@ Template
 
 **In progress**
 
-Visitor
+[Visitor](/src/main/kotlin/oop/Visitor)
 ------
 
 > Represent an operation to be performed on the elements of an object structure. It lets you define a new operation without changing the classes of the elements on which it operates.
 
-**In progress**
+### Example
+
+```kotlin
+interface PaymentMethodVisitable {
+  fun accept(visitor: PaymentMethodVisitor)
+}
+
+sealed class PaymentMethod(var moneyPayed: Float, var cost: Float) : PaymentMethodVisitable {
+
+  class CashPaymentMethod(moneyPayed: Float, cost: Float) : PaymentMethod(moneyPayed, cost) {
+    override fun accept(visitor: PaymentMethodVisitor) = visitor.visit(this)
+  }
+
+  class CreditCardPaymentMethod(cost: Float) : PaymentMethod(cost, cost) {
+    override fun accept(visitor: PaymentMethodVisitor) = visitor.visit(this)
+  }
+
+}
+
+interface PaymentMethodVisitor {
+  fun visit(paymentMethod: PaymentMethod.CashPaymentMethod)
+  fun visit(paymentMethod: PaymentMethod.CreditCardPaymentMethod)
+}
+
+class CashRegister(initialAmount: Float) : PaymentMethodVisitor {
+
+  var cash = initialAmount
+    private set
+
+  override fun visit(paymentMethod: PaymentMethod.CashPaymentMethod) {
+    cash += paymentMethod.moneyPayed
+    cash -= (paymentMethod.moneyPayed - paymentMethod.cost)
+    paymentMethod.moneyPayed = (paymentMethod.moneyPayed - paymentMethod.cost)
+  }
+
+  override fun visit(paymentMethod: PaymentMethod.CreditCardPaymentMethod) {
+    cash += paymentMethod.cost
+    paymentMethod.moneyPayed = 0
+  }
+
+}
+```
+
+### Usage
+
+```kotlin
+val cashRegister = CashRegister(0.0f)
+val cash = PaymentMethod.CashPaymentMethod(15.50f, 12.50f)
+cashRegister.visit(cash)
+
+println(cashRegister.cash) // 12.50f
+println(cash.moneyPayed)   // 3f
+```
 
 Creational
 ==========
