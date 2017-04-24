@@ -12,7 +12,7 @@ Kotlin OOP and FP Design Patterns
     * [ ] [Interpreter](#interpreter)
     * [ ] [Iterator](#iterator)
     * [ ] [Mediator](#mediator)
-    * [ ] [Memento](#memento)
+    * [x] [Memento](#memento)
     * [ ] [Null Object](#null-object)
     * [x] [Observer](#observer)
     * [x] [State](#state)
@@ -174,12 +174,40 @@ Mediator
 
 **In progress**
 
-Memento
+[Memento](/src/main/kotlin/oop/Memento)
 ---------
 
 > It captures and externalizes an object's internal state so it can get back to this state later without violating encapsulation
 
-**In progress**
+### Example
+
+```kotlin
+data class Memento<out T>(val state: T)
+
+class Originator<T>(var state: T) {
+  fun saveToMemento() = Memento(state)
+  fun loadFromMemento(memento: Memento<T>) {
+    state = memento.state
+  }
+}
+
+class CareTaker<T> {
+  val mementoList = mutableListOf<Memento<T>>()
+}
+```
+
+### Usage
+
+```kotlin
+val changingClass = Originator("Hello world")
+val states = CareTaker<String>()
+
+changingClass.state += "!"
+states.mementoList.add(changingClass.saveToMemento())
+
+changingClass.state = "I've made a mistake :("
+changingClass.loadFromMemento(states.mementoList[0])
+```
 
 Null Object
 -----------
