@@ -1,5 +1,14 @@
 package oop.proxy
 
+/**
+ * Remote Proxy[edit]
+In distributed object communication, a local object represents a remote object (one that belongs to a different address space).
+The local object is a proxy for the remote object, and method invocation on the local object results in remote method invocation on the remote object.
+An example would be an ATM implementation, where the ATM might hold proxy objects for bank information that exists in the remote server.
+ *
+ * See https://en.wikipedia.org/wiki/Distributed_object_communication
+ */
+
 interface Message {
   fun writeInChannel(message: String, channel: String)
 }
