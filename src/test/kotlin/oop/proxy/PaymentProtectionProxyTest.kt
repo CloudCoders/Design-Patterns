@@ -11,15 +11,17 @@ class PaymentProtectionProxyTest {
   fun `pay transaction success`() {
     var realPayment = RealPaymentMock()
     val protectionProxy = PaymentProtectionProxy(realPayment)
+
     protectionProxy.pay(Transaction(100.0, false))
 
     assertTrue(realPayment.callPay)
   }
 
   @Test
-  fun `pay transaction failure if international`(){
+  fun `pay transaction failure if international`() {
     var realPayment = RealPaymentMock()
     val protectionProxy = PaymentProtectionProxy(realPayment)
+
     protectionProxy.pay(Transaction(100.0, true))
 
     assertFalse(realPayment.callPay)
