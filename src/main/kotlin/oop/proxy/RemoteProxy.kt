@@ -29,7 +29,7 @@ class MessageServerObject(val serverDomain: ServerDomain = ServerDomain()) : Mes
 
 class ServerDomain(val channels: MutableList<String> = mutableListOf())
 
-class SimulateOutputStream {
+class SimulateOutputStream(val networkSimulationMessageServerObject: MessageServerObject) {
 
   fun write(string: String) {
     println("write message on network: $string")
@@ -44,8 +44,7 @@ class SimulateOutputStream {
       .removeSuffix(":TCPendlol:")
       .split(":")
 
-    var messageServerObject = MessageServerObject()
-    messageServerObject.writeInChannel(message, channel)
+    networkSimulationMessageServerObject.writeInChannel(message, channel)
 
     //MY SERVER LEFT
   }
