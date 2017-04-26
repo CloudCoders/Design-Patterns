@@ -6,14 +6,12 @@ interface Screen {
 
 class ScreenVirtualProxy(val createRealScreen: () -> Screen) : Screen {
 
-  var realScreen: Screen? = null
+  val realScreen: Screen by lazy {
+    createRealScreen()
+  }
 
   override fun show() {
-    if (realScreen == null) {
-      realScreen = createRealScreen()
-    }
-
-    realScreen?.show()
+    realScreen.show()
   }
 }
 
