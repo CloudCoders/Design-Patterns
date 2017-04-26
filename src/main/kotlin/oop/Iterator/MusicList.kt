@@ -1,6 +1,10 @@
 package oop.Iterator
 
-class MusicList: Iterable {
+class MusicList: Iterable<MusicList.Song> {
+  override fun getIterator(type: TypeIterator): Iterator<Song> {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
   data class Song(val title: String,val artist: String)
   val musicList =
     mutableListOf(
@@ -10,8 +14,5 @@ class MusicList: Iterable {
       Song("Pieces", "Sum41")
 
   )
-  override fun getIterator(): Iterator {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
 
 }

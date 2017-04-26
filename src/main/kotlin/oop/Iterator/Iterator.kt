@@ -11,6 +11,6 @@ interface Iterator<T> {
   fun set(element: T)
   fun get() : T
   fun <B> map(res: (T) -> B): MutableList<B>
-  fun <B> forEach(res: (T) -> (B))
+  fun forEach(res: (T) -> Unit)
   fun filter(res: (T) -> Boolean): MutableList<T>
 }
