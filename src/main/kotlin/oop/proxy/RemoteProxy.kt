@@ -24,7 +24,7 @@ class MessageRemoteProxy(private val ouputStream: SimulateOutputStream) : Messag
   }
 }
 
-open class MessageServerObject(private val serverDomain: ServerDomain = ServerDomain()) : Message {
+class MessageServerObject(private val serverDomain: ServerDomain = ServerDomain()) : Message {
 
   override fun writeInChannel(message: String, channel: String) {
     serverDomain.channels.forEach {
@@ -38,7 +38,7 @@ open class MessageServerObject(private val serverDomain: ServerDomain = ServerDo
 
 class ServerDomain(val channels: MutableList<String> = mutableListOf())
 
-class SimulateOutputStream(private val networkSimulationMessageServerObject: MessageServerObject) {
+class SimulateOutputStream(private val networkSimulationMessageServerObject: Message) {
 
   fun write(string: String) {
     println("write message on network: $string")

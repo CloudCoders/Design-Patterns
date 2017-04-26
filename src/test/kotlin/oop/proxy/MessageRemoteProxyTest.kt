@@ -22,7 +22,7 @@ class MessageRemoteProxyTest {
   }
 
   class MessageServerObjectMock(var message: String = "",
-                                var channel: String = "") : MessageServerObject() {
+                                var channel: String = "") : Message {
 
     override fun writeInChannel(message: String, channel: String) {
       this.message = message
