@@ -8,9 +8,15 @@ class ScreenVirtualProxyTest {
 
   @Test
   fun `not create real object in proxy construction`() {
-    val screenVirtualProxy = ScreenVirtualProxy({ RealScreen() })
+    var createCount = 0
+    var createRealScreen = {
+      createCount++
+      RealScreen()
+    }
 
-    assertNull(screenVirtualProxy.realScreen)
+    val screenVirtualProxy = ScreenVirtualProxy(createRealScreen)
+
+    assertThat(createCount, `is`(0))
   }
 
   @Test
