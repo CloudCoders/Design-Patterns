@@ -4,7 +4,7 @@ interface Message {
   fun writeInChannel(message: String, channel: String)
 }
 
-class MessageRemoteProxy(val ouputStream: SimulateOutputStream) : Message {
+class MessageRemoteProxy(private val ouputStream: SimulateOutputStream) : Message {
 
   private val addHeadTCP = ":TCPInformationLOL:"
   private val tailTCP = ":TCPendlol:"
@@ -15,7 +15,7 @@ class MessageRemoteProxy(val ouputStream: SimulateOutputStream) : Message {
   }
 }
 
-class MessageServerObject(val serverDomain: ServerDomain = ServerDomain()) : Message {
+open class MessageServerObject(private val serverDomain: ServerDomain = ServerDomain()) : Message {
 
   override fun writeInChannel(message: String, channel: String) {
     serverDomain.channels.forEach {
@@ -29,7 +29,7 @@ class MessageServerObject(val serverDomain: ServerDomain = ServerDomain()) : Mes
 
 class ServerDomain(val channels: MutableList<String> = mutableListOf())
 
-class SimulateOutputStream(val networkSimulationMessageServerObject: MessageServerObject) {
+class SimulateOutputStream(private val networkSimulationMessageServerObject: MessageServerObject) {
 
   fun write(string: String) {
     println("write message on network: $string")
