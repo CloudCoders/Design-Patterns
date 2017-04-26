@@ -1,4 +1,4 @@
-package oop.proxy
+package oop.Proxy
 
 import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertTrue

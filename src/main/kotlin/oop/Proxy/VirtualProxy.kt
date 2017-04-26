@@ -1,4 +1,4 @@
-package oop.proxy
+package oop.Proxy
 
 interface Screen {
   fun show()

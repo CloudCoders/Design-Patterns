@@ -1,4 +1,4 @@
-package oop.proxy
+package oop.Proxy
 
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat

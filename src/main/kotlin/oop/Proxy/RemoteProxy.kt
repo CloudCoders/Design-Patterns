@@ -1,4 +1,4 @@
-package oop.proxy
+package oop.Proxy
 
 /**
  * Remote Proxy[edit]

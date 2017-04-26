@@ -1,4 +1,4 @@
-package oop.proxy
+package oop.Proxy
 
 interface Payment {
   fun pay(transaction: Transaction)
