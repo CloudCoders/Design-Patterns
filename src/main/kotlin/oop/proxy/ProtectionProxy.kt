@@ -4,7 +4,7 @@ interface Payment {
   fun pay(transaction: Transaction)
 }
 
-class PaymentProxy(private val realPayment: Payment) : Payment {
+class PaymentProtectionProxy(private val realPayment: Payment) : Payment {
 
   override fun pay(transaction: Transaction) {
     if (!transaction.isInternational){
