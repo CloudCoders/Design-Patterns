@@ -21,6 +21,7 @@ class MessageRemoteProxyTest {
     assertThat(networkSimulationMessageServerObject.channel, `is`("myChannel"))
   }
 
+
   class MessageServerObjectMock(var message: String = "",
                                 var channel: String = "") : Message {
 

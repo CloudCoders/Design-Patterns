@@ -32,7 +32,7 @@ Kotlin OOP and FP Design Patterns
     * [x] [Decorator](#decorator)
     * [x] [Facade](#facade)
     * [ ] [Flyweight](#flyweight)
-    * [ ] [Proxy](#proxy)
+    * [x] [Proxy](#proxy)
 * FP
   * [Monads](#monads)
     * [x] [Option/Maybe](#option)
@@ -550,13 +550,141 @@ Flyweight
 
 **In progress**
 
-Proxy
+[Proxy](/src/main/kotlin/oop/Proxy)
 ------
 
 > It provides a placeholder for another object to control access to it.
 > It is an extra level of indirection to support controlled or intelligent access.
 
-**In progress**
+There are 3 types of Proxies
+
+* [Protection Proxy](#protection-proxy) - Which control the access to an object.
+* [Virtual Proxy](#virtual-proxy) - Which prevents creating an object until it is really necessary to save resources.
+* [Remote Proxy](#remote-proxy) - Which duty is to create a correct request to ask a remote real object which may not be in our domain.
+
+**Protection proxy**
+
+### Example
+
+```kotlin
+class Transaction(val amount: Double,
+                  val isInternational: Boolean)
+
+interface Payment {
+  fun pay(transaction: Transaction)
+}
+
+class PaymentProtectionProxy(private val payment: Payment): Payment {
+  override fun pay(transaction: Transaction) {
+    if (transaction.isInternational) println("Payment is international, we do not allow it")
+    else payment.pay(transaction)
+  }
+}
+
+class RealPayment(val initialAmount: Double): Payment {
+  override fun pay(transaction: Transaction) {
+    initialAmount -= transaction.amount
+    println("Successful!")
+  }
+}
+```
+
+### Usage
+
+```kotlin
+val account = RealPayment(100.0)
+val localBank = PaymentProtectionProxy(account)
+
+localBank.pay(Transaction(3.15, true)) // It won't allow us to pay
+localBank.pay(Transaction(3.15, false)) // It will work
+```
+
+**Virtual Proxy**
+
+We can use kotlin's [lazy delegation](https://kotlinlang.org/docs/reference/delegated-properties.html#lazy)
+
+### Example
+
+```kotlin
+interface Screen {
+  fun show()
+}
+
+class VirtualScreen(val screenCreation: () -> Screen) : Screen {
+  private val realScreen: Screen by lazy {
+    screenCreation()
+  }
+  
+  override fun show() {
+    realScreen.show()
+  }
+}
+
+class RealScreen : Screen {
+  constructor() {
+    // It gets really hungry in here
+  }
+  
+  override fun show() {
+    println("¯\_(ツ)_/¯")
+  }
+}
+```
+
+### Usage
+
+```kotlin
+val virtualScreen = VirtualScreen({ RealScreen() })  // We haven't created a RealScreen yet
+
+// Several lines after...
+
+virtualScreen.show()  // RealScreen is needed now, so we create it
+
+```
+
+**Remote Proxy**
+
+### Example
+
+```kotlin
+// Client code
+
+interface Message {
+  fun writeInChannel(text: String, channel: String)
+}
+
+class MessageProxy(private val outpuStream: OutputStream) : Message {
+  override fun writeInChannel(text: String, channel: String) {
+    outpuStream.write("Headers:$text:$channel:Goodbye")
+  }
+}
+
+// Server code
+
+class ServerMessage(val channels: List<Channel>) : Message {
+  override fun writeInChannel(text: String, channel: String) {
+    channels.forEach {
+      if (it == channel) {
+        println("$text")
+      }
+    }
+  }
+}
+
+class Server {
+  val channels = listOf("1", "2", "3")
+  val messageHandler = ServerMessage(channels)
+  
+  fun onClientMessage(request: String) {
+    val (message, channel) = request
+      .removePrefix("Headers:")
+      .removeSuffix(":Goodbye")
+      .split(":")
+      
+    messageHandler.writeInChannel(message, channel)                  
+  }
+}
+```
 
 ## Functional paradigm
 
