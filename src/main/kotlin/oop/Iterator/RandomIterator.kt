@@ -1,4 +1,5 @@
 package oop.Iterator
 
-class RandomIterator {
+class RandomIterator<T>(list: MutableList<T>): NormalIterator<T>(list) {
+
 }

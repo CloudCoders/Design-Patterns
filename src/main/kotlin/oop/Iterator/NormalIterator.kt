@@ -1,7 +1,7 @@
 package oop.Iterator
 
-class NormalIterator<T>(val list: MutableList<T>) : Iterator<T> {
-  private var index = 0
+open class NormalIterator<T>(val list: MutableList<T>) : Iterator<T> {
+  protected var index = 0
 
   override fun first(): T? {
     index = 0
@@ -18,7 +18,7 @@ class NormalIterator<T>(val list: MutableList<T>) : Iterator<T> {
 
   override fun next(): T? = if (hasNext()) list[index++] else throw NoSuchElementException()
 
-  override fun prev(): T? = if (hasPrev()) list[index++] else throw NoSuchElementException()
+  override fun prev(): T? = if (hasPrev()) list[index--] else throw NoSuchElementException()
 
   override fun set(element: T) {
     list[index] = element
