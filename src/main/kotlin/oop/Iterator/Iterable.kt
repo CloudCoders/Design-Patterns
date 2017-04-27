@@ -1,6 +1,7 @@
 package oop.Iterator
 
 interface Iterable<T> {
-  fun getIterator(type: TypeIterator): Iterator<T>
+  fun getNormalIterator(): Iterator<T>
+  fun getBackwardsIterator(): Iterator<T>
 }
 
