@@ -562,7 +562,8 @@ There are 3 types of Proxies
 * [Virtual Proxy](#virtual-proxy) - Which prevents creating an object until it is really necessary to save resources.
 * [Remote Proxy](#remote-proxy) - Which duty is to create a correct request to ask a remote real object which may not be in our domain.
 
-**Protection proxy**
+Protection proxy
+-------
 
 ### Example
 
@@ -599,7 +600,8 @@ localBank.pay(Transaction(3.15, true)) // It won't allow us to pay
 localBank.pay(Transaction(3.15, false)) // It will work
 ```
 
-**Virtual Proxy**
+Virtual Proxy
+------------
 
 We can use kotlin's [lazy delegation](https://kotlinlang.org/docs/reference/delegated-properties.html#lazy)
 
@@ -642,7 +644,8 @@ virtualScreen.show()  // RealScreen is needed now, so we create it
 
 ```
 
-**Remote Proxy**
+Remote Proxy
+----------
 
 ### Example
 
