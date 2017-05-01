@@ -16,7 +16,7 @@ class MementoTest {
 
     val memento = originator.saveToMemento()
 
-    assert.that(memento.state, `is`(memento.state))
+    assert.that(originator.state, `is`(memento.state))
   }
 
   @Test
@@ -35,9 +35,9 @@ class MementoTest {
     val originator = Originator(listOf(1,2,3))
     val memento = originator.saveToMemento()
 
-    careTaker.mementoList.add(memento)
+    careTaker.addMemento(memento)
 
-    assert.that(careTaker.mementoList[0], `is`(memento))
+    assert.that(careTaker.getMemento(0)!!, `is`(memento))
   }
 
 }
