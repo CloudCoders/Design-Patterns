@@ -1,6 +1,5 @@
 package oop.Observer2
 
-interface Observer<T>{
-  val list: MutableList<Player>
+interface Observer<T> {
   fun onChange(newValue: T)
 }

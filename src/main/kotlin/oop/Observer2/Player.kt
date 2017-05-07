@@ -2,8 +2,10 @@ package oop.Observer2
 
 
 data class Player (val name: String,
-                   var currentCategory: String = "history"){
-  fun notify(newCategory: String){
-    println("$name: category changed to $newCategory")
+                   var currentCategory: String = "history") : Observer<String> {
+
+  override fun onChange(newValue: String) {
+    currentCategory = newValue
+    println("New category is $newValue")
   }
 }
