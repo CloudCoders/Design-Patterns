@@ -1,7 +1,5 @@
 package oop.Observer.subscription
 
-import kotlin.system.measureTimeMillis
-
 class PublishSubject<A>(private val observers: MutableList<Observer<A>> = mutableListOf()) {
 
   fun register(observer: Observer<A>): Observer<A> {
