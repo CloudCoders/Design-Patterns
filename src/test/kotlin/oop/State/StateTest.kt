@@ -1,7 +1,7 @@
 package oop.State
 
 import org.hamcrest.CoreMatchers.instanceOf
-import org.junit.Assert.*
+import org.junit.Assert.assertThat
 import org.junit.Test
 
 class StateTest {
@@ -17,28 +17,26 @@ class StateTest {
   fun `semaphore should change state red to green`(){
     val semaphore = Semaphore()
 
-    semaphore.changeState()
+    semaphore.nextLight()
 
     assertThat(semaphore.state, instanceOf(SemaphoreStates.Green::class.java))
   }
 
   @Test
-  fun `semaphore should change state green to ambar`(){
+  fun `semaphore should change state green to yellow`(){
     val semaphore = Semaphore()
 
-    semaphore.changeState() //red to green
-    semaphore.changeState() //green to ambar
+    semaphore.nextLight() //red to green
+    semaphore.nextLight() //green to yellow
 
-    assertThat(semaphore.state, instanceOf(SemaphoreStates.Ambar::class.java))
+    assertThat(semaphore.state, instanceOf(SemaphoreStates.Yellow::class.java))
   }
 
   @Test
-  fun `semaphore should change state ambar to red`(){
-    val  semaphore = Semaphore()
+  fun `semaphore should change state yellow to red`(){
+    val  semaphore = Semaphore(SemaphoreStates.Yellow)
 
-    semaphore.changeState()
-    semaphore.changeState()
-    semaphore.changeState() //ambar to red
+    semaphore.nextLight() //yellow to red
 
     assertThat(semaphore.state, instanceOf(SemaphoreStates.Red::class.java))
   }
