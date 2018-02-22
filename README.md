@@ -27,7 +27,7 @@ Kotlin OOP and FP Design Patterns
     * [ ] [Prototype](#prototype)
     * [x] [Singleton](#singleton)
   * [Structural Patterns](#structural)
-    * [ ] [Adapter](#adapter)
+    * [x] [Adapter](#adapter)
     * [ ] [Bridge](#bridge)
     * [x] [Composite](#brigde)
     * [x] [Decorator](#decorator)
