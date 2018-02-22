@@ -407,7 +407,7 @@ OneInstance.sayHello()
 Structural
 ==========
 
-Adapter
+[Adapter](/src/main/kotlin/oop/Adapter)
 --------
 
 > It converts an interface of a class into another interface clients expect. It lets classes work together that couldn't otherwise.
