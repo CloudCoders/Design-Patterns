@@ -19,7 +19,7 @@ class IteratorShould {
     iterator.next()
     iterator.next()
     iterator.next()
-    assertThat(iterator.get(), `is`("29"))
+    assertThat(iterator.get(), `is`("30"))
   }
 
   @Test(expected = NoSuchElementException::class)
