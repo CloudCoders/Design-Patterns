@@ -1,0 +1,131 @@
+autoCorrect: true
+
+build:
+  warningThreshold: 1
+  failThreshold: 1
+
+potential-bugs:
+  active: true
+  NoElseInWhenExpression:
+    active: false
+
+exceptions:
+  active: true
+
+empty:
+  active: true
+
+empty-blocks:
+  active: true
+
+completixy:
+  active: true
+  LongMethod:
+    threshold: 20
+  LargeClass:
+    threshold: 300
+  ComplexMethod:
+    threshold: 10
+  NestedBlockDepth:
+    threshold: 5
+
+code-smell:
+  active: true
+  FeatureEnvy:
+    threshold: 0.5
+    weight: 0.45
+    base: 0.5
+
+formatting:
+  active: true
+  Indentation:
+    active: true
+    autoCorrect: true
+  ConsecutiveBlankLines:
+    active: true
+    autoCorrect: true
+  MultipleSpaces:
+    active: true
+    autoCorrect: true
+  SpacingAfterKeyword:
+    active: true
+    autoCorrect: true
+  SpacingAroundColon:
+    active: true
+    autoCorrect: true
+  SpacingAroundCurlyBraces:
+    active: true
+    autoCorrect: true
+  SpacingAroundOperator:
+    active: true
+    autoCorrect: true
+  TrailingSpaces:
+    active: true
+    autoCorrect: true
+  UnusedImports:
+    active: true
+    autoCorrect: true
+  OptionalSemicolon:
+    active: true
+    autoCorrect: true
+  ExpressionBodySyntax:
+    active: true
+    autoCorrect: true
+
+naming:
+  active: true
+  ClassNaming:
+    active: true
+    classPattern: '[A-Z$][a-zA-Z0-9$]*'
+  EnumNaming:
+    active: true
+    enumEntryPattern: '^[A-Z][_a-zA-Z0-9]*'
+  ForbiddenClassName:
+    active: false
+    forbiddenName: ''
+  FunctionMaxLength:
+    active: false
+    maximumFunctionNameLength: 30
+  FunctionMinLength:
+    active: false
+    minimumFunctionNameLength: 3
+  FunctionNaming:
+    active: true
+    functionPattern: '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
+  MatchingDeclarationName:
+    active: false
+  MemberNameEqualsClassName:
+    active: false
+    ignoreOverriddenFunction: true
+  ObjectPropertyNaming:
+    active: true
+    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
+  PackageNaming:
+    active: false
+  TopLevelPropertyNaming:
+    active: true
+    constantPattern: '[A-Z][_A-Z0-9]*'
+    propertyPattern: '[a-z][A-Za-z\d]*'
+    privatePropertyPattern: '(_)?[a-z][A-Za-z0-9]*'
+  VariableMaxLength:
+    active: false
+    maximumVariableNameLength: 64
+  VariableMinLength:
+    active: false
+    minimumVariableNameLength: 1
+  VariableNaming:
+    active: true
+    variablePattern: '[A-Za-z][A-Za-z0-9]*'
+    privateVariablePattern: '[A-Za-z][A-Za-z0-9]*'
+
+style:
+  active: true
+  WildcardImport:
+    active: false
+  NamingConventionViolation:
+    active: false
+  MaxLineLength:
+    active: false
+    maxLineLength: 160
+  NewLineAtEndOfFile:
+    active: true
