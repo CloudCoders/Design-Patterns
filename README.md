@@ -161,7 +161,7 @@ Interpreter
 
 **In progress**
 
-Iterator
+[Iterator](/src/main/kotlin/oop/Iterator)
 --------
 
 > It provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation
