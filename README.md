@@ -10,7 +10,7 @@ Kotlin OOP and FP Design Patterns
     * [x] [Chain of Responsability](#chain-of-responsability)
     * [x] [Command](#command)
     * [ ] [Interpreter](#interpreter)
-    * [ ] [Iterator](#iterator)
+    * [x] [Iterator](#iterator)
     * [ ] [Mediator](#mediator)
     * [ ] [Memento](#memento)
     * [ ] [Null Object](#null-object)
@@ -161,12 +161,49 @@ Interpreter
 
 **In progress**
 
-Iterator
+[Iterator](/src/main/kotlin/oop/Iterator)
 --------
 
 > It provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation
 
-**In progress**
+### Example
+
+```kotlin
+interface Iterator<T> {
+  fun next(): T?
+  fun prev(): T?
+  fun set(element: T)
+  fun get(): T
+}
+
+interface Iterable<T> {
+  fun getIterator(): Iterator<T>
+}
+
+class NormalIterator<T>(private val list: MutableList<T>) : Iterator<T> {
+  private var index = 0
+
+  override fun next(): T? = if (hasNext()) list[index++] else throw NoSuchElementException()
+  override fun previous(): T? = if (hasPrev()) list[index--] else throw NoSuchElementException()
+
+  override fun get(): T = list[index]
+  override fun set(element: T) {
+    list[index] = element
+  }
+}
+```
+
+### Usage
+
+```kotlin
+val list = mutableListOf(10, 1, 12, 4)
+val iterator = NormalIterator(list)
+
+iterator.next()
+iterator.next()
+iterator.prev()
+iterator.get() // 1
+```
 
 Mediator
 ---------

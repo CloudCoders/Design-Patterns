@@ -1,4 +1,4 @@
 package oop.Strategy.strategies
 
 // Alternative way
-val SuperReducedStrategy = { cost: Double -> cost + cost * 0.04 }
+val superReducedStrategy = { cost: Double -> cost + cost * 0.04 }
