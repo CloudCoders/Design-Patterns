@@ -11,13 +11,13 @@ import oop.Decorator.sauces.RedPepperSauce
 import oop.Decorator.sauces.SateSauce
 import oop.Decorator.sauces.TeriyakiSauce
 import oop.Factory.NoodlesFactory
-import oop.Strategy.strategies.GeneralStrategy
-import oop.Strategy.strategies.ReducedStrategy
-import oop.Strategy.strategies.SuperReducedStrategy
+import oop.Strategy.strategies.generalStrategy
+import oop.Strategy.strategies.reducedStrategy
+import oop.Strategy.strategies.superReducedStrategy
 import java.util.*
 
 open class Cart(private val scanner: Scanner,
-  private var ivaStrategy: (Double) -> Double = GeneralStrategy) {
+  private var ivaStrategy: (Double) -> Double = generalStrategy) {
 
 
   private lateinit var noodles: Noodles
@@ -94,10 +94,10 @@ open class Cart(private val scanner: Scanner,
     println()
 
     when (sauceChoice) {
-      1 -> ivaStrategy = GeneralStrategy
-      2 -> ivaStrategy = ReducedStrategy
-      3 -> ivaStrategy = SuperReducedStrategy
-      else -> ivaStrategy = GeneralStrategy
+      1 -> ivaStrategy = generalStrategy
+      2 -> ivaStrategy = reducedStrategy
+      3 -> ivaStrategy = superReducedStrategy
+      else -> ivaStrategy = generalStrategy
     }
   }
 

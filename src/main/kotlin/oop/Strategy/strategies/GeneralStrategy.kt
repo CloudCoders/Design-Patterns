@@ -1,3 +1,3 @@
 package oop.Strategy.strategies
 
-val GeneralStrategy : (Double) -> Double = { it + it * 0.21 }
+val generalStrategy: (Double) -> Double = { it + it * 0.21 }
