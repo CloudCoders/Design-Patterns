@@ -27,7 +27,7 @@ Kotlin OOP and FP Design Patterns
     * [ ] [Prototype](#prototype)
     * [x] [Singleton](#singleton)
   * [Structural Patterns](#structural)
-    * [ ] [Adapter](#adapter)
+    * [x] [Adapter](#adapter)
     * [ ] [Bridge](#bridge)
     * [x] [Composite](#brigde)
     * [x] [Decorator](#decorator)
@@ -444,12 +444,62 @@ OneInstance.sayHello()
 Structural
 ==========
 
-Adapter
+[Adapter](/src/main/kotlin/oop/Adapter)
 --------
 
 > It converts an interface of a class into another interface clients expect. It lets classes work together that couldn't otherwise.
 
-**In progress**
+### Example
+We're going to adapt a U.S robot interface that uses miles per hour and feet (Imperial system) to a European interface that employs Km/h and meters (Metric system).
+
+```kotlin
+interface USRobotsAdaptee{
+  var speedInMilesPerHour: Double
+  fun enableFirstLawMode()
+  fun jump(feet: Double)
+}
+
+interface EuropeanRobotTarget
+{
+  var speedInKilometersPerHour: Double
+  fun jump(meters: Double)
+}
+
+class USRobot(override var speedInMilesPerHour: Double = 0.0) :USRobotsAdaptee{
+  override fun enableFirstLawMode() {
+    println("Partial first law enabled")
+  }
+
+  override fun jump(feet: Double) {
+    println("JUMPED $feet feet")
+
+  }
+  
+data class EURobotAdapter(var usRobot: USRobot) : EuropeanRobotTarget{
+  override var speedInKilometersPerHour: Double
+    get() = usRobot.speedInMilesPerHour * 1.6093
+    set(value) {usRobot.speedInMilesPerHour = value * 0.62137}
+
+
+
+  override fun jump(meters: Double) {
+    usRobot.jump(meters * 0.3048)
+  }
+
+
+```
+
+### Usage
+
+```kotlin
+val euRobot = EURobotAdapter(USRobot())
+euRobot.speedInKilometersPerHour = 3.4
+
+println("Current speed in KM/h: ${euRobot.speedInKilometersPerHour}")
+euRobot.jump(12.5)
+```
+
+
 
 Bridge
 ------
