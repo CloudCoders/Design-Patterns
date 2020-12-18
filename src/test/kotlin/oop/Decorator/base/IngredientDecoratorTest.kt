@@ -20,6 +20,7 @@ class IngredientDecoratorTest {
   fun `Ingredient Decorator should return ingredient cost plus base noodle cost`() =
     assertThat(Pork(UdonNoodles()).calculateCost(), `is`(8.00))
 
+
   @Test
   fun `check decorated Noodles is of type IngredientDecorator`() =
     assertTrue(Tuna(UdonNoodles()) is IngredientDecorator)
